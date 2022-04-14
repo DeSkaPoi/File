@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using File.Domain;
+using File.Infrastructure.ContextDB;
 
-namespace File.Infrastructure
+namespace File.Infrastructure.RepositoryDB
 {
-    public class FileRepository
+    public class FileRepository : IFileRepository
     {
         private readonly FileContext context;
         public FileRepository(FileContext context)
@@ -49,6 +50,5 @@ namespace File.Infrastructure
             context.Update(file);
             await context.SaveChangesAsync();
         }
-
     }
 }

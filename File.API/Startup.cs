@@ -14,6 +14,11 @@ using System.Threading.Tasks;
 using File.Infrastructure;
 using File.Domain;
 using Microsoft.EntityFrameworkCore;
+using File.Infrastructure.ContextDB;
+using File.Infrastructure.DataBaseFile.ModelConnect;
+using Microsoft.Extensions.Options;
+using File.Infrastructure.RepositoryDB;
+using File.Infrastructure.DataBaseFile;
 
 namespace File.API
 {
@@ -26,9 +31,14 @@ namespace File.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<Connect>(Configuration.GetSection("ConnectFileData"));
+            services.AddSingleton<IConnect>(sp => sp.GetRequiredService<IOptions<Connect>>().Value);
+            
+
+            services.AddSingleton<IContextFileData, ContextFileData>();
+            //services.AddSingleton<IFileRepository ,FileRepository>();
 
             services.AddControllers();
             services.AddDbContext<FileContext>(b =>

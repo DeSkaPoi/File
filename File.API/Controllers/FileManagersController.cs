@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using File.Domain;
-using File.Infrastructure;
+using File.Infrastructure.ContextDB;
+using File.Infrastructure.RepositoryDB;
+using File.Infrastructure.DataBaseFile;
 
 namespace File.API.Controllers
 {
@@ -14,17 +16,20 @@ namespace File.API.Controllers
     [ApiController]
     public class FileManagersController : ControllerBase
     {
-        private readonly FileRepository repository;
+        private readonly IFileRepository repository;
+        private readonly IContextFileData contextFileData;
 
-        public FileManagersController(FileContext context)
+        public FileManagersController(FileContext context, IContextFileData contextFileData)
         {
             repository = new FileRepository(context);
+            this.contextFileData = contextFileData;
         }
 
         // GET: api/FileManagers
         [HttpGet]
         public async Task<List<FileManager>> GetFilesAsync()
         {
+
             return await repository.GetAllFilesAsync();
         }
 
