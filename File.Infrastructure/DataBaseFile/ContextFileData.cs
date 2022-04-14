@@ -21,7 +21,17 @@ namespace File.Infrastructure.DataBaseFile
             gridFS = new GridFSBucket(database);
         }
 
+        public async Task<ObjectId> AddFileAsync(string name, Stream fileStream)
+        {
+            return await gridFS.UploadFromStreamAsync(name, fileStream);
+        }
 
-
+        public async Task<Stream> GetFileAsync(ObjectId obj)
+        {
+            Stream stream = new MemoryStream();
+            await gridFS.DownloadToStreamAsync(obj, stream);
+            stream.Close();
+            return stream;
+        }
     }
 }

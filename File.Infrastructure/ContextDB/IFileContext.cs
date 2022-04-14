@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace File.Infrastructure.ContextDB
 {
-    interface IFileContext
+    public interface IFileContext
     {
     }
 }

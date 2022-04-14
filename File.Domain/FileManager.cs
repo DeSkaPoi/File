@@ -6,8 +6,8 @@ namespace File.Domain
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
+        public string ObjectId { get; set; }
         public string Format { get; set; }
-
         public string KeyWords { get; set; }
         public string Description { get; set; }
         public int? ContentType { get; set; }
