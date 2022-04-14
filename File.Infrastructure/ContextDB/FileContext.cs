@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using File.Domain;
 
-
-
-namespace File.Infrastructure
+namespace File.Infrastructure.ContextDB
 {
     public class FileContext : DbContext
     {

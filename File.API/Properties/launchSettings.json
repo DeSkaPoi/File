@@ -16,7 +16,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
-    }/*,
+    },
     "File.API": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
@@ -26,6 +26,6 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
-    }*/
+    }
   }
 }
