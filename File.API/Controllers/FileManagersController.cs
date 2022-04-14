@@ -35,7 +35,6 @@ namespace File.API.Controllers
         [HttpGet]
         public async Task<List<FileManager>> GetFilesAsync()
         {
-
             return await repository.GetAllFilesAsync();
         }
 
