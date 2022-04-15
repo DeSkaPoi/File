@@ -38,13 +38,15 @@ namespace File.API
             
 
             services.AddSingleton<IContextFileData, ContextFileData>();
-            //services.AddSingleton<IFileRepository ,FileRepository>();
+            services.AddScoped<IFileRepository ,FileRepository>();
+
+            //services.AddSingleton(x => new FileContext());
 
             services.AddControllers();
             services.AddDbContext<FileContext>(b =>
             {
                 b.UseSqlServer(Configuration.GetConnectionString("FileManagerDb"));
-            });
+            },ServiceLifetime.Scoped);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

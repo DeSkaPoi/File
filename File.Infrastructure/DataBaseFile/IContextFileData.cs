@@ -12,7 +12,7 @@ namespace File.Infrastructure.DataBaseFile
 {
     public interface IContextFileData
     {
-        public Task<ObjectId> AddFileAsync(Stream fileStream);
+        public Task<ObjectId> AddFileAsync(string name, Stream fileStream);
         public Task<Stream> GetFileAsync(ObjectId obj);
 
     }

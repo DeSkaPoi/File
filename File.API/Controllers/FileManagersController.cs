@@ -18,18 +18,11 @@ namespace File.API.Controllers
     {
         private readonly IFileRepository repository;
         private readonly IContextFileData contextFileData;
-
-        public FileManagersController(FileContext context, IContextFileData contextFileData)
-        {
-            repository = new FileRepository(context);
-            this.contextFileData = contextFileData;
-        }
-
-        /*public FileManagersController(IFileRepository repository, IContextFileData contextFileData)
+        public FileManagersController(IFileRepository repository, IContextFileData contextFileData)
         {
             this.repository = repository;
             this.contextFileData = contextFileData;
-        }*/
+        }
 
         // GET: api/FileManagers
         [HttpGet]
