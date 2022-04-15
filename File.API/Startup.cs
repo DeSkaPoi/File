@@ -40,8 +40,6 @@ namespace File.API
             services.AddSingleton<IContextFileData, ContextFileData>();
             services.AddScoped<IFileRepository ,FileRepository>();
 
-            //services.AddSingleton(x => new FileContext());
-
             services.AddControllers();
             services.AddDbContext<FileContext>(b =>
             {
