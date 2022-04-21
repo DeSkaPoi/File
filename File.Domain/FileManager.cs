@@ -15,6 +15,5 @@ namespace File.Domain
         public DateTime CreationTime { get; set; }
         public DateTime LastUpDate { get; set; }
         public string Size { get; set; }
-        public bool BelongDocument{ get; set; }
     }
 }

@@ -13,11 +13,13 @@ namespace File.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FileGridFsController : ControllerBase
+    public class FileManagersController : ControllerBase
     {
+        private readonly IFileRepository _repository;
         private readonly IContextFileData _contextFileData;
-        public FileGridFsController(IContextFileData contextFileData)
+        public FileManagersController(IFileRepository repository, IContextFileData contextFileData)
         { 
+            _repository = repository;
             _contextFileData = contextFileData;
         }
 
