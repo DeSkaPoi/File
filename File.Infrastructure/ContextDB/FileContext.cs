@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using File.Domain;
 using Microsoft.EntityFrameworkCore;
-using File.Domain;
 
 namespace File.Infrastructure.ContextDB
 {
@@ -19,7 +14,7 @@ namespace File.Infrastructure.ContextDB
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<FileManager>(tmp => 
+            modelBuilder.Entity<FileManager>(tmp =>
             {
                 tmp.Property(prop => prop.Content).HasDefaultValue("not indicated");
                 tmp.Property(prop => prop.Description).HasDefaultValue("not indicated");
@@ -29,7 +24,7 @@ namespace File.Infrastructure.ContextDB
                 tmp.Property(prop => prop.Title).HasDefaultValue("not indicated");
                 tmp.Property(prop => prop.ContentType).HasDefaultValue(null);
                 tmp.Property(prop => prop.LastUpDate).HasDefaultValue(null);
-                tmp.Property(prop => prop.BelongDocument).HasDefaultValue(false);
+                tmp.Property(prop => prop.ObjectId).HasDefaultValue("no picture in storage");
             });
         }
     }

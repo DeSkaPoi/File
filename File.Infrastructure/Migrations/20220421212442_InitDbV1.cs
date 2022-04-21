@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace File.Infrastructure.Migrations
 {
-    public partial class initdbv1 : Migration
+    public partial class InitDbV1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace File.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "not indicated"),
-                    ObjectId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ObjectId = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "no picture in storage"),
                     Format = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "not indicated"),
                     KeyWords = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "not indicated"),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "not indicated"),
@@ -21,8 +21,7 @@ namespace File.Infrastructure.Migrations
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "not indicated"),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastUpDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Size = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "not indicated"),
-                    BelongDocument = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                    Size = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "not indicated")
                 },
                 constraints: table =>
                 {

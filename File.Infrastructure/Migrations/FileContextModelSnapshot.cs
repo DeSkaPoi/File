@@ -25,11 +25,6 @@ namespace File.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("BelongDocument")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
                     b.Property<string>("Content")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
@@ -60,7 +55,9 @@ namespace File.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ObjectId")
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("no picture in storage");
 
                     b.Property<string>("Size")
                         .ValueGeneratedOnAdd()

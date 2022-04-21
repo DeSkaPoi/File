@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MongoDB.Driver;
-using MongoDB.Driver.GridFS;
+﻿using MongoDB.Bson;
 using System.IO;
-using MongoDB.Bson;
+using System.Threading.Tasks;
 
 namespace File.Infrastructure.DataBaseFile
 {
@@ -14,6 +8,8 @@ namespace File.Infrastructure.DataBaseFile
     {
         public Task<ObjectId> AddFileAsync(string name, Stream fileStream);
         public Task<Stream> GetFileAsync(ObjectId obj);
+        public Task UpdateFileAsync(string objectId, Stream streamPicture);
+        public Task DeleteFileAsync(ObjectId obj);
 
     }
 }
