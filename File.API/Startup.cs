@@ -1,6 +1,4 @@
 using File.Infrastructure.ContextDB;
-using File.Infrastructure.DataBaseFile;
-using File.Infrastructure.DataBaseFile.ModelConnect;
 using File.Infrastructure.RepositoryDB;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,11 +21,6 @@ namespace File.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<Connect>(Configuration.GetSection("ConnectFileData"));
-            services.AddSingleton<IConnect>(sp => sp.GetRequiredService<IOptions<Connect>>().Value);
-
-
-            services.AddSingleton<IContextFileData, ContextFileData>();
             services.AddScoped<IFileRepository, FileRepository>();
 
             services.AddControllers();

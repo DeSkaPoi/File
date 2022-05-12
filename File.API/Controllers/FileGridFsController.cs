@@ -1,5 +1,4 @@
 ﻿using File.Domain;
-using File.Infrastructure.DataBaseFile;
 using File.Infrastructure.RepositoryDB;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -16,11 +15,9 @@ namespace File.API.Controllers
     public class FileManagersController : ControllerBase
     {
         private readonly IFileRepository _repository;
-        private readonly IContextFileData _contextFileData;
-        public FileManagersController(IFileRepository repository, IContextFileData contextFileData)
+        public FileManagersController(IFileRepository repository)
         { 
             _repository = repository;
-            _contextFileData = contextFileData;
         }
 
         // GET: api/FileManagers
