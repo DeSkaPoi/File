@@ -7,10 +7,10 @@ namespace File.Infrastructure.RepositoryDB
 {
     public interface IFileRepository
     {
-        public Task<IReadOnlyList<DBModel.FileInfoDataBase>> GetAllFilesAsync();
-        public Task<DBModel.FileInfoDataBase> GetByIdFileAsync(Guid idFile);
-        public Task AddFileAsync(DBModel.FileInfoDataBase file);
+        public Task<IReadOnlyList<FileInfoDataBase>> GetAllFilesAsync();
+        public Task<FileInfoDataBase> GetByIdFileAsync(Guid idFile);
+        public Task AddFileAsync(FileInfoDataBase file);
         public Task DeleteFileAsync(Guid idFile);
-        public Task UpdateFileAsync(DBModel.FileInfoDataBase file);
+        public Task UpdateFileAsync(FileInfoDataBase file);
     }
 }

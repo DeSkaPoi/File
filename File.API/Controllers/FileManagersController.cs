@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using File.API.ErrorResponses;
+using File.Domain.Model;
+using FileManagement.Services;
+using File.API.Converts;
 
 namespace File.API.Controllers
 {
@@ -11,20 +14,20 @@ namespace File.API.Controllers
     [ApiController]
     public class FileManagersController : ControllerBase
     {
-        private readonly IFileRepository _repository;
-        public FileManagersController(IFileRepository repository)
-        { 
-            _repository = repository;
+        private readonly IFileServices _service;
+        public FileManagersController(IFileServices service)
+        {
+            _service = service;
         }
 
         // GET: api/FileManagers
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<FileManager>>> GetFilesAsync()
+        public async Task<ActionResult<IReadOnlyList<FileInfoResponse>>> GetFilesAsync()
         {
             try
             {
-                var file = await _repository.GetAllFilesAsync();
-                var action = new ActionResult<IReadOnlyList<FileManager>>(file);
+                var file = await _service.GetFilesAsync();
+                var action = new ActionResult<IReadOnlyList<FileInfoResponse>>(file.ConvertToModel());
                 return action;
             }
             catch (Exception ex)
@@ -36,30 +39,28 @@ namespace File.API.Controllers
 
         // GET: api/FileManagers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<FileManager>> GetFileAsync(Guid id)
+        public async Task<ActionResult<FileInfoResponse>> GetFileAsync(Guid id)
         {
-            var fileManager = await _repository.GetByIdFileAsync(id);
+            var fileManager = await _service.GetFileAsync(id);
             if (fileManager == null)
             {
                 var errorResponse = new ErrorResponse($"Not found {id}");
                 return StatusCode(404, errorResponse);
             }
-            return fileManager;
+
+            var response = fileManager.ConvertToResponse();
+            return response;
         }
 
         // PUT: api/FileManagers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFileManagerAsync(Guid id, FileManager fileManager)
+        public async Task<IActionResult> PutFileManagerAsync(Guid id, FileInfoResponse fileManager)
         {
-            if (id != fileManager.Id)//неправльно//
-            {
-                var errorResponse = new ErrorResponse("Bad request: no match between id and object");
-                return StatusCode(400, errorResponse);
-            }
             try
             {
-                await _repository.UpdateFileAsync(fileManager);
+                var payloadRequests = fileManager.ConvertToModel();
+                await _service.ChangeFileAsync(id, payloadRequests);
                 return StatusCode(204);
             }
             catch (Exception ex)
@@ -69,14 +70,13 @@ namespace File.API.Controllers
             }
         }
 
-        // POST: api/FileManagers
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<FileManager>> PostFileManagerAsync(FileManager fileManager)
+        public async Task<ActionResult<FileInfoResponse>> PostFileManagerAsync(FileInfoResponse fileManager)
         {
             try
             {
-                await _repository.AddFileAsync(fileManager);
+                var payloadRequests = fileManager.ConvertToModel();
+                await _service.AddFileAsync(payloadRequests);
                 return StatusCode(201, fileManager);
             }
             catch (Exception ex)
@@ -89,20 +89,18 @@ namespace File.API.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteFileManagerRange(List<Guid> ids)
         {
-            var NoneDeleteGuid = new List<Guid>();
+            IReadOnlyList<Guid> NoneDeleteGuid = new List<Guid>();
             int i = 0;
             try
             {
-                for (; i < ids.Count; i++)
-                {
-                    await _repository.DeleteFileAsync(ids[i]);
-                }
+               NoneDeleteGuid = await _service.DeleteFiles(ids);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                NoneDeleteGuid.Add(ids[i]);
+                var errorResponse = new ErrorResponse(ex.Message);
+                return StatusCode(404, errorResponse);
             }
-
+            
             if (NoneDeleteGuid.Count != 0)
             {
                 return NotFound(NoneDeleteGuid);
@@ -116,7 +114,7 @@ namespace File.API.Controllers
         {
             try
             {
-                await _repository.DeleteFileAsync(id);
+                await _service.DeleteFile(id);
                 return StatusCode(204);
             }
             catch (Exception ex)

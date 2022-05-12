@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace File.Infrastructure.DBModel
+namespace File.Domain.Model
 {
-    public class FileInfoDataBase
+    public class FileInfoResponse
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
@@ -14,13 +14,12 @@ namespace File.Infrastructure.DBModel
         public DateTime CreationTime { get; set; }
         public DateTime LastUpDate { get; set; }
         public string Size { get; set; }
+        public FileObjectResponse FileObj { get; set; }
 
-        public FileObjectDataBase FileObj { get; set; }
+        //public FileInfoResponse() { }
 
-        public FileInfoDataBase() { }
-
-        public FileInfoDataBase(Guid id, string title, string format, string keyWords, string description, int? contentType,
-            string content, DateTime creationTime, DateTime lastUpDate, string size, FileObjectDataBase fileObj)
+        public FileInfoResponse(Guid id, string title, string format, string keyWords, string description, int? contentType,
+            string content, DateTime creationTime, DateTime lastUpDate, string size, FileObjectResponse fileObj)
         {
             Id = id;
             Title = title;

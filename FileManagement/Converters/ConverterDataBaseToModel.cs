@@ -7,16 +7,20 @@ namespace File.Domain.Converters
 {
     public static class ConverterDataBaseToModel
     {
-        public static FileInformation ConvertToModel(this FileInfoDataBase fileManager)
+        public static FileInformation ConvertToModel(this FileInfoDataBase file)
         {
-            var fileObject = new FileObject(fileManager.FileObj.File);
-            return new FileInformation(fileManager.Id, fileManager.Title, fileManager.Format, fileManager.KeyWords, fileManager.Description, fileManager.ContentType, fileManager.Content,
-                fileManager.CreationTime, fileManager.LastUpDate, fileManager.Size, fileObject);
+            FileObject fileObject = null;
+            if (file.FileObj is not null)
+            {
+                fileObject = new FileObject(file.FileObj.File);
+            }
+            return new FileInformation(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
+                file.CreationTime, file.LastUpDate, file.Size, fileObject);
         }
 
-        public static IReadOnlyList<File.Domain.Model.FileInformation> ConvertToModel(this IReadOnlyList<FileInfoDataBase> fileManager)
+        public static IReadOnlyList<FileInformation> ConvertToModel(this IReadOnlyList<FileInfoDataBase> files)
         {
-            return fileManager.Select(file => file.ConvertToModel()).ToList();
+            return files.Select(file => file.ConvertToModel()).ToList();
         }
     }
 }

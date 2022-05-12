@@ -7,10 +7,11 @@ using File.Domain.Converters;
 using File.Domain.Model;
 using File.Infrastructure.RepositoryDB;
 using FileManagement.Converters;
+using FileManagement.Services;
 
 namespace File.Domain.Services
 {
-    public class FileServices
+    public class FileServices : IFileServices
     {
         private readonly IFileRepository _repository;
 
@@ -31,28 +32,28 @@ namespace File.Domain.Services
             var fileDb = await _repository.GetByIdFileAsync(id);
             if (fileDb == null)
             {
-                new Exception($"not found file {id}");
+                return null;
             }
             var filesModel = fileDb.ConvertToModel();
             return filesModel;
         }
 
-        public async Task ChangeFileManagerAsync(Guid id, FileInformation file)
+        public async Task ChangeFileAsync(Guid id, FileInformation file)
         {
             if (id != file.Id)
             {
-                new Exception("No match between id and object");
+                throw new Exception("No match between id and object");
             }
              
             await _repository.UpdateFileAsync(file.ConvertToDataBase());
         }
 
-        public async Task PostFileManagerAsync(FileInformation file)
+        public async Task AddFileAsync(FileInformation file)
         {
             await _repository.AddFileAsync(file.ConvertToDataBase());
         }
 
-        public async Task<IReadOnlyList<Guid>> DeleteFileManagerRange(IReadOnlyList<Guid> ids)
+        public async Task<IReadOnlyList<Guid>> DeleteFiles(IReadOnlyList<Guid> ids)
         {
             var NoneDeleteGuid = new List<Guid>();
             int i = 0;
@@ -71,7 +72,7 @@ namespace File.Domain.Services
             return NoneDeleteGuid;
         }
 
-        public async Task DeleteFileManager(Guid id)
+        public async Task DeleteFile(Guid id)
         { 
             await _repository.DeleteFileAsync(id);
         }

@@ -11,9 +11,9 @@ namespace FileManagement.Services
     {
         public Task<IReadOnlyList<FileInformation>> GetFilesAsync();
         public Task<FileInformation> GetFileAsync(Guid id);
-        public Task ChangeFileManagerAsync(Guid id, FileInformation file);
-        public Task PostFileManagerAsync(FileInformation file);
-        public Task<IReadOnlyList<Guid>> DeleteFileManagerRange(IReadOnlyList<Guid> ids);
-        public Task DeleteFileManager(Guid id);
+        public Task ChangeFileAsync(Guid id, FileInformation file);
+        public Task AddFileAsync(FileInformation file);
+        public Task<IReadOnlyList<Guid>> DeleteFiles(IReadOnlyList<Guid> ids);
+        public Task DeleteFile(Guid id);
     }
 }

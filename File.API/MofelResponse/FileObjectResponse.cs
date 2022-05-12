@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace File.Domain.Model
 {
-    public class FileObject
+    public class FileObjectResponse
     {
-        public byte[] File { get; private set; }
+        public byte[] File { get; set; }
 
-        public FileObject(byte[] file)
+        public FileObjectResponse(byte[] file)
         {
             File = file;
         }

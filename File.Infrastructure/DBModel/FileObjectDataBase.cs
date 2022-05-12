@@ -10,6 +10,7 @@ namespace File.Infrastructure.DBModel
         public Guid FileManagerId { get; set; }
         public FileInfoDataBase Manager { get; set; }
 
+        
         public FileObjectDataBase(byte[] file)
         {
             File = file;

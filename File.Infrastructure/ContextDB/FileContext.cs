@@ -6,7 +6,7 @@ namespace File.Infrastructure.ContextDB
 {
     public class FileContext : DbContext
     {
-        public DbSet<DBModel.FileInfoDataBase> Files { get; set; }
+        public DbSet<FileInfoDataBase> Files { get; set; }
         public FileContext(DbContextOptions options) : base(options)
         {
         }
@@ -15,7 +15,7 @@ namespace File.Infrastructure.ContextDB
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<File>(tmp =>
+            modelBuilder.Entity<FileInfoDataBase>(tmp =>
             {
                 tmp.Property(prop => prop.Content).HasDefaultValue("not indicated");
                 tmp.Property(prop => prop.Description).HasDefaultValue("not indicated");

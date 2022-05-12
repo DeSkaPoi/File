@@ -10,11 +10,15 @@ namespace FileManagement.Converters
 {
     public static class ConvertsModelToDataBase
     {
-        public static FileInfoDataBase ConvertToDataBase(this FileInformation fileManager)
+        public static FileInfoDataBase ConvertToDataBase(this FileInformation file)
         {
-            var fileObject = new FileObjectDataBase(fileManager.FileObj.File);
-            return new FileInfoDataBase(fileManager.Id, fileManager.Title, fileManager.Format, fileManager.KeyWords, fileManager.Description, fileManager.ContentType, fileManager.Content,
-                fileManager.CreationTime, fileManager.LastUpDate, fileManager.Size, fileObject);
+            FileObjectDataBase fileObject = null;
+            if (file.FileObj is not null)
+            {
+                fileObject = new FileObjectDataBase(file.FileObj.File);
+            }
+            return new FileInfoDataBase(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
+                file.CreationTime, file.LastUpDate, file.Size, fileObject);
         }
     }
 }
