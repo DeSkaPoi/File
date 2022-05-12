@@ -1,11 +1,12 @@
-﻿using File.Domain;
+﻿using File.Infrastructure.DBModel;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace File.Infrastructure.ContextDB
 {
     public class FileContext : DbContext
     {
-        public DbSet<FileManager> Files { get; set; }
+        public DbSet<DBModel.FileInfoDataBase> Files { get; set; }
         public FileContext(DbContextOptions options) : base(options)
         {
         }
@@ -14,7 +15,7 @@ namespace File.Infrastructure.ContextDB
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<FileManager>(tmp =>
+            modelBuilder.Entity<File>(tmp =>
             {
                 tmp.Property(prop => prop.Content).HasDefaultValue("not indicated");
                 tmp.Property(prop => prop.Description).HasDefaultValue("not indicated");
@@ -24,7 +25,17 @@ namespace File.Infrastructure.ContextDB
                 tmp.Property(prop => prop.Title).HasDefaultValue("not indicated");
                 tmp.Property(prop => prop.ContentType).HasDefaultValue(null);
                 tmp.Property(prop => prop.LastUpDate).HasDefaultValue(null);
-                tmp.Property(prop => prop.ObjectId).HasDefaultValue("no picture in storage");
+
+                tmp.HasOne(fileManager => fileManager.FileObj).WithOne(fileObj => fileObj.Manager);
+            });
+
+            modelBuilder.Entity<FileObjectDataBase>(fileObject =>
+            {
+                fileObject.ToTable("FileObject");
+                fileObject.Property(prop => prop.File).HasDefaultValue(null);
+                
+                fileObject.HasOne(fileObj => fileObj.Manager).WithOne(fileManager => fileManager.FileObj)
+                    .HasForeignKey<FileObjectDataBase>(fileManager => fileManager.FileManagerId);
             });
         }
     }

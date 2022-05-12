@@ -1,24 +1,20 @@
-﻿using File.Domain;
-using File.Infrastructure.DataBaseFile;
-using File.Infrastructure.RepositoryDB;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using File.API.ErrorResponses;
-using MongoDB.Bson;
 
 namespace File.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FileGridFsController : ControllerBase
+    public class FileManagersController : ControllerBase
     {
-        private readonly IContextFileData _contextFileData;
-        public FileGridFsController(IContextFileData contextFileData)
+        private readonly IFileRepository _repository;
+        public FileManagersController(IFileRepository repository)
         { 
-            _contextFileData = contextFileData;
+            _repository = repository;
         }
 
         // GET: api/FileManagers
