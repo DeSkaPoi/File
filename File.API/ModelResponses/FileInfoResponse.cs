@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace File.Domain.Model
+namespace File.Domain.ModelResponses
 {
     public class FileInfoResponse
     {

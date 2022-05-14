@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using File.API.ErrorResponses;
 using File.Domain.Model;
 using FileManagement.Services;
 using File.API.Converts;
+using File.API.ModelResponses;
+using File.Domain.ModelResponses;
 
 namespace File.API.Controllers
 {

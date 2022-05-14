@@ -18,12 +18,12 @@ namespace File.Infrastructure.RepositoryDB
 
         public async Task<IReadOnlyList<FileInfoDataBase>> GetAllFilesAsync()
         {
-            return await _context.Files.ToListAsync();
+            return await _context.Files.Include(f => f.FileObj).ToListAsync();
         }
 
         public async Task<FileInfoDataBase> GetByIdFileAsync(Guid idFile)
         {
-            return await _context.Files.FindAsync(idFile);
+            return await _context.Files.Where(f => f.Id == idFile).Include(f => f.FileObj).FirstOrDefaultAsync();
         }
 
         public async Task AddFileAsync(FileInfoDataBase file)

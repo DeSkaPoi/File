@@ -1,4 +1,4 @@
-﻿namespace File.API.ErrorResponses
+﻿namespace File.API.ModelResponses
 {
     public class ErrorResponse
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace File.Domain.Model
+namespace File.Domain.ModelResponses
 {
     public class FileObjectResponse
     {
