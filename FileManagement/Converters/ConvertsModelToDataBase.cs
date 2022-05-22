@@ -20,5 +20,10 @@ namespace FileManagement.Converters
             return new FileInfoDataBase(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
                 file.CreationTime, file.LastUpDate, file.Size, fileObject);
         }
+
+        public static FileObjectDataBase ConvertToDataBase(this FileObject file)
+        {
+            return new FileObjectDataBase(file.File);
+        }
     }
 }

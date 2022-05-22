@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,5 +16,8 @@ namespace FileManagement.Services
         public Task AddFileAsync(FileInformation file);
         public Task<IReadOnlyList<Guid>> DeleteFiles(IReadOnlyList<Guid> ids);
         public Task DeleteFile(Guid id);
+        public Task ChangeFileObjectAsync(Guid idFileInfo, MemoryStream ms);
+        public Task AddFileObjectAsync(Guid idFileInfo, MemoryStream ms);
+        public Task<IReadOnlyList<FileObject>> GetFilesObjectsAsync();
     }
 }

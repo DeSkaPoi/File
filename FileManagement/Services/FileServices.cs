@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,6 +47,25 @@ namespace File.Domain.Services
             }
              
             await _repository.UpdateFileAsync(file.ConvertToDataBase());
+        }
+
+        public async Task ChangeFileObjectAsync(Guid idFileInfo, MemoryStream ms)
+        {
+            var fileObject = new FileObject(idFileInfo, ms.ToArray());
+            await _repository.UpdateFileObjectAsync(fileObject.ConvertToDataBase());
+        }
+
+        public async Task AddFileObjectAsync(Guid idFileInfo, MemoryStream ms)
+        {
+            var fileObject = new FileObject(idFileInfo, ms.ToArray());
+            await _repository.AddFileObjectAsync(fileObject.ConvertToDataBase());
+        }
+
+        public async Task<IReadOnlyList<FileObject>> GetFilesObjectsAsync()
+        {
+            var filesDb = await _repository.GetAllFilesObjectsAsync();
+            var filesModel = filesDb.ConvertToModel();
+            return filesModel;
         }
 
         public async Task AddFileAsync(FileInformation file)

@@ -8,10 +8,12 @@ namespace File.Domain.Model
 {
     public class FileObject
     {
+        public Guid IdFileInfo { get; private set; }
         public byte[] File { get; private set; }
 
-        public FileObject(byte[] file)
+        public FileObject(Guid idFileInfo ,byte[] file)
         {
+            IdFileInfo = idFileInfo;
             File = file;
         }
     }

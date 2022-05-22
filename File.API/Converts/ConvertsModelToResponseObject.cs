@@ -7,20 +7,31 @@ namespace File.API.Converts
 {
     public static class ConvertsModelToResponseObject
     {
-        public static FileInfoResponse ConvertToResponse(this FileInformation file)
+        public static FileResponse ConvertToResponse(this FileInformation file)
         {
             FileObjectResponse fileObject = null;
             if (file.FileObj is not null)
             {
-                fileObject = new FileObjectResponse(file.FileObj.File);
+                fileObject = file.FileObj.ConvertToResponse();
             }
-            return new FileInfoResponse(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
+            return new FileResponse(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
                 file.CreationTime, file.LastUpDate, file.Size, fileObject);
         }
 
-        public static IReadOnlyList<FileInfoResponse> ConvertToModel(this IReadOnlyList<FileInformation> files)
+        public static FileInfoResponse ConvertInfoToResponse(this FileInformation file)
+        {
+            return new FileInfoResponse(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
+                file.CreationTime, file.LastUpDate, file.Size);
+        }
+
+        public static IReadOnlyList<FileResponse> ConvertToResponse(this IReadOnlyList<FileInformation> files)
         {
             return files.Select(file => file.ConvertToResponse()).ToList();
+        }
+
+        public static FileObjectResponse ConvertToResponse(this FileObject file)
+        {
+            return new FileObjectResponse(file.IdFileInfo, file.File);
         }
     }
 }

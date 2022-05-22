@@ -7,6 +7,7 @@ namespace File.Infrastructure.ContextDB
     public class FileContext : DbContext
     {
         public DbSet<FileInfoDataBase> Files { get; set; }
+        public DbSet<FileObjectDataBase> FilesObject { get; set; }
         public FileContext(DbContextOptions options) : base(options)
         {
         }

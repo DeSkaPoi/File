@@ -5,15 +5,10 @@ namespace File.API.Converts
 {
     public static class ConvertsResponseObjectToModel
     {
-        public static FileInformation ConvertToModel(this FileInfoResponse file)
+        public static FileInformation ConvertToModel(this FileResponse file)
         {
-            FileObject fileObject = null;
-            if (file.FileObj is not null)
-            {
-                fileObject = new FileObject(file.FileObj.File);
-            }
             return new FileInformation(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
-                file.CreationTime, file.LastUpDate, file.Size, fileObject);
+                file.CreationTime, file.LastUpDate, file.Size, null);
         }
     }
 }

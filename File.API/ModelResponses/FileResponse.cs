@@ -2,7 +2,7 @@
 
 namespace File.Domain.ModelResponses
 {
-    public class FileInfoResponse
+    public class FileResponse
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
@@ -18,7 +18,7 @@ namespace File.Domain.ModelResponses
 
         //public FileInfoResponse() { }
 
-        public FileInfoResponse(Guid id, string title, string format, string keyWords, string description, int? contentType,
+        public FileResponse(Guid id, string title, string format, string keyWords, string description, int? contentType,
             string content, DateTime creationTime, DateTime lastUpDate, string size, FileObjectResponse fileObj)
         {
             Id = id;

@@ -23,12 +23,12 @@ namespace File.API.Controllers
 
         // GET: api/FileManagers
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<FileInfoResponse>>> GetFilesAsync()
+        public async Task<ActionResult<IReadOnlyList<FileResponse>>> GetFilesAsync()
         {
             try
             {
                 var file = await _service.GetFilesAsync();
-                var action = new ActionResult<IReadOnlyList<FileInfoResponse>>(file.ConvertToModel());
+                var action = new ActionResult<IReadOnlyList<FileResponse>>(file.ConvertToResponse());
                 return action;
             }
             catch (Exception ex)
@@ -49,14 +49,14 @@ namespace File.API.Controllers
                 return StatusCode(404, errorResponse);
             }
 
-            var response = fileManager.ConvertToResponse();
+            var response = fileManager.ConvertInfoToResponse();
             return response;
         }
 
         // PUT: api/FileManagers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFileManagerAsync(Guid id, FileInfoResponse fileManager)
+        public async Task<IActionResult> PutFileManagerAsync(Guid id, FileResponse fileManager)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace File.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<FileInfoResponse>> PostFileManagerAsync(FileInfoResponse fileManager)
+        public async Task<ActionResult<FileResponse>> PostFileManagerAsync(FileResponse fileManager)
         {
             try
             {

@@ -12,7 +12,7 @@ namespace File.Domain.Converters
             FileObject fileObject = null;
             if (file.FileObj is not null)
             {
-                fileObject = new FileObject(file.FileObj.File);
+                fileObject = new FileObject(file.FileObj.FileManagerId, file.FileObj.File);
             }
             return new FileInformation(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
                 file.CreationTime, file.LastUpDate, file.Size, fileObject);
@@ -21,6 +21,11 @@ namespace File.Domain.Converters
         public static IReadOnlyList<FileInformation> ConvertToModel(this IReadOnlyList<FileInfoDataBase> files)
         {
             return files.Select(file => file.ConvertToModel()).ToList();
+        }
+
+        public static IReadOnlyList<FileObject> ConvertToModel(this IReadOnlyList<FileObjectDataBase> files)
+        {
+            return files.Select(file => new FileObject(file.FileManagerId, file.File)).ToList();
         }
     }
 }
