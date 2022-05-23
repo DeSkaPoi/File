@@ -27,6 +27,11 @@ namespace File.Infrastructure.RepositoryDB
             return await _context.Files.Include(f => f.FileObj).FirstOrDefaultAsync(f => f.Id == idFile);
         }
 
+        public async Task<FileInfoDataBase> GetByIdFileObjectAsync(Guid idFile)
+        {
+            return await _context.Files.Include(f => f.FileObj).FirstOrDefaultAsync(f => f.Id == idFile);
+        }
+
         public async Task AddFileAsync(FileInfoDataBase file)
         {
             await _context.Files.AddAsync(file);
@@ -35,7 +40,7 @@ namespace File.Infrastructure.RepositoryDB
 
         public async Task DeleteFileAsync(Guid idFile)
         {
-            DBModel.FileInfoDataBase file = await _context.Files.Where(f => f.Id == idFile).Include(f => f.FileObj).FirstOrDefaultAsync();
+            var file = await _context.Files.Where(f => f.Id == idFile).Include(f => f.FileObj).FirstOrDefaultAsync();
             if (file == null)
             {
                 throw new Exception("file is not exist");
@@ -54,14 +59,12 @@ namespace File.Infrastructure.RepositoryDB
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddFileObjectAsync(FileObjectDataBase file)
+        public async Task AddFileObjectAsync(FileObjectDataBase file, Guid idFile)
         {
-            await _context.FilesObject.AddAsync(file);
+            var fileFromDataBase = await _context.Files.Include(f => f.FileObj).FirstOrDefaultAsync(f => f.Id == idFile);
+            fileFromDataBase.FileObj = file;
+            //await _context.AddAsync(fileFromDataBase);
             await _context.SaveChangesAsync();
-        }
-        public async Task<IReadOnlyList<FileObjectDataBase>> GetAllFilesObjectsAsync()
-        {
-            return await _context.FilesObject.ToListAsync();
         }
     }
 }

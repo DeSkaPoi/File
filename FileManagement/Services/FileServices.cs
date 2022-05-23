@@ -39,6 +39,17 @@ namespace File.Domain.Services
             return filesModel;
         }
 
+        public async Task<FileInformation> GetFileObjectAsync(Guid id)
+        {
+            var fileDb = await _repository.GetByIdFileObjectAsync(id);
+            if (fileDb == null)
+            {
+                return null;
+            }
+            var filesModel = fileDb.ConvertToModel();
+            return filesModel;
+        }
+
         public async Task ChangeFileAsync(Guid id, FileInformation file)
         {
             if (id != file.Id)
@@ -58,14 +69,7 @@ namespace File.Domain.Services
         public async Task AddFileObjectAsync(Guid idFileInfo, MemoryStream ms)
         {
             var fileObject = new FileObject(idFileInfo, ms.ToArray());
-            await _repository.AddFileObjectAsync(fileObject.ConvertToDataBase());
-        }
-
-        public async Task<IReadOnlyList<FileObject>> GetFilesObjectsAsync()
-        {
-            var filesDb = await _repository.GetAllFilesObjectsAsync();
-            var filesModel = filesDb.ConvertToModel();
-            return filesModel;
+            await _repository.AddFileObjectAsync(fileObject.ConvertToDataBase(), fileObject.IdFileInfo);
         }
 
         public async Task AddFileAsync(FileInformation file)

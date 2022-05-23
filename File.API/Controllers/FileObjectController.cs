@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using File.Domain.Model;
 using FileManagement.Services;
@@ -10,6 +12,7 @@ using File.API.ModelResponses;
 using File.Domain.ModelResponses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
+using System.Drawing;
 
 namespace File.API.Controllers
 {
@@ -39,12 +42,39 @@ namespace File.API.Controllers
             }
         }*/
 
-        // GET: api/FileManagers/5
+        [HttpGet("scale/{id}")]
+        public async Task<ActionResult<FileObjectResponse>> GetFileScalesObjectAsync(Guid id)
+        {
+            var fileManager = await _service.GetFileObjectAsync(id);
+            if (fileManager is null || fileManager.FileObj is null)
+            {
+                var errorResponse = new ErrorResponse($"Not found {id}");
+                return StatusCode(404, errorResponse);
+            }
+
+            try
+            {
+                var streamImage = new MemoryStream(fileManager.FileObj.File);
+                var image = Image.FromStream(streamImage);
+                var scaleImage = (Image)(new Bitmap(image, new Size(200, 200)));
+                var byteArrayImage = (byte[])(new ImageConverter()).ConvertTo(scaleImage, typeof(byte[]));
+                var fileObjectResponse = new FileObjectResponse(fileManager.FileObj.IdFileInfo, byteArrayImage);
+
+                return StatusCode(200, fileObjectResponse);
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = new ErrorResponse(ex.Message);
+                return StatusCode(500, errorResponse);
+            }
+        }
+
+        // GET: api/FileObject/id
         [HttpGet("{id}")]
         public async Task<ActionResult<FileObjectResponse>> GetFileObjectAsync(Guid id)
         {
-            var fileManager = await _service.GetFileAsync(id);
-            if (fileManager == null)
+            var fileManager = await _service.GetFileObjectAsync(id);
+            if (fileManager is null || fileManager.FileObj is null)
             {
                 var errorResponse = new ErrorResponse($"Not found {id}");
                 return StatusCode(404, errorResponse);
@@ -57,7 +87,7 @@ namespace File.API.Controllers
         // PUT: api/FileManagers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{idFileInfo}")]
-        public async Task<IActionResult> PutFileManagerAsync(Guid idFileInfo, IFormFile file)
+        public async Task<IActionResult> PutFileManagerAsync([FromForm]IFormFile file, Guid idFileInfo)
         {
             try
             {
@@ -67,7 +97,7 @@ namespace File.API.Controllers
                     var errorResponse = new ErrorResponse($"Not found {idFileInfo}");
                     return StatusCode(404, errorResponse);
                 }
-
+                
                 var fileStream = file.OpenReadStream();
                 using var ms = new MemoryStream();
                 await fileStream.CopyToAsync(ms);
@@ -82,7 +112,7 @@ namespace File.API.Controllers
         }
 
         [HttpPost("{idFileInfo}")]
-        public async Task<ActionResult<FileResponse>> PostFileManagerAsync(Guid idFileInfo, IFormFile file)
+        public async Task<IActionResult> PostFileManagerAsync(IFormFile file, Guid idFileInfo)
         {
             try
             {

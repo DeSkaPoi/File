@@ -18,6 +18,6 @@ namespace FileManagement.Services
         public Task DeleteFile(Guid id);
         public Task ChangeFileObjectAsync(Guid idFileInfo, MemoryStream ms);
         public Task AddFileObjectAsync(Guid idFileInfo, MemoryStream ms);
-        public Task<IReadOnlyList<FileObject>> GetFilesObjectsAsync();
+        public Task<FileInformation> GetFileObjectAsync(Guid id);
     }
 }

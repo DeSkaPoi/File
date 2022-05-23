@@ -13,7 +13,7 @@ namespace File.Infrastructure.RepositoryDB
         public Task DeleteFileAsync(Guid idFile);
         public Task UpdateFileAsync(FileInfoDataBase file);
         public Task UpdateFileObjectAsync(FileObjectDataBase file);
-        public Task AddFileObjectAsync(FileObjectDataBase file);
-        public Task<IReadOnlyList<FileObjectDataBase>> GetAllFilesObjectsAsync();
+        public Task AddFileObjectAsync(FileObjectDataBase file, Guid idFile);
+        public Task<FileInfoDataBase> GetByIdFileObjectAsync(Guid idFile);
     }
 }

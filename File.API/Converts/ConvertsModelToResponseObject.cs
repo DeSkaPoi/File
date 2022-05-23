@@ -24,6 +24,11 @@ namespace File.API.Converts
                 file.CreationTime, file.LastUpDate, file.Size);
         }
 
+        public static IReadOnlyList<FileInfoResponse> ConvertInfoToResponse(this IReadOnlyList<FileInformation> files)
+        {
+            return files.Select(file => file.ConvertInfoToResponse()).ToList();
+        }
+
         public static IReadOnlyList<FileResponse> ConvertToResponse(this IReadOnlyList<FileInformation> files)
         {
             return files.Select(file => file.ConvertToResponse()).ToList();
