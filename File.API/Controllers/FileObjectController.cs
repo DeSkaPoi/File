@@ -26,23 +26,7 @@ namespace File.API.Controllers
             _service = service;
         }
 
-        /*[HttpGet]
-        public async Task<ActionResult<IReadOnlyList<FileObjectResponse>>> GetFilesObjectsAsync()
-        {
-            try
-            {
-                var file = await _service.GetFilesObjectsAsync();
-                var action = new ActionResult<IReadOnlyList<FileObjectResponse>>(file.ConvertToModel());
-                return action;
-            }
-            catch (Exception ex)
-            {
-                var errorResponse = new ErrorResponse(ex.Message);
-                return StatusCode(404, errorResponse);
-            }
-        }*/
-
-        [HttpGet("scale/{id}")]
+        /*[HttpGet("scale/{id}")]
         public async Task<ActionResult<FileObjectResponse>> GetFileScalesObjectAsync(Guid id)
         {
             var fileManager = await _service.GetFileObjectAsync(id);
@@ -67,7 +51,7 @@ namespace File.API.Controllers
                 var errorResponse = new ErrorResponse(ex.Message);
                 return StatusCode(500, errorResponse);
             }
-        }
+        }*/
 
         // GET: api/FileObject/id
         [HttpGet("{id}")]
