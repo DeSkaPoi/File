@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace File.Infrastructure.Migrations
 {
-    public partial class InitDB : Migration
+    public partial class InitDbV1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -33,24 +33,18 @@ namespace File.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     File = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    FileManagerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    FileType = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FileObject", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FileObject_Files_FileManagerId",
-                        column: x => x.FileManagerId,
+                        name: "FK_FileObject_Files_Id",
+                        column: x => x.Id,
                         principalTable: "Files",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FileObject_FileManagerId",
-                table: "FileObject",
-                column: "FileManagerId",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

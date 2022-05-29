@@ -20,7 +20,7 @@ namespace File.Infrastructure.DBModel
         public FileInfoDataBase() { }
 
         public FileInfoDataBase(Guid id, string title, string format, string keyWords, string description, int? contentType,
-            string content, DateTime creationTime, DateTime lastUpDate, string size, FileObjectDataBase fileObj)
+            string content, DateTime creationTime, DateTime lastUpDate, string size)
         {
             Id = id;
             Title = title;
@@ -32,7 +32,6 @@ namespace File.Infrastructure.DBModel
             CreationTime = creationTime;
             LastUpDate = lastUpDate;
             Size = size;
-            FileObj = fileObj;
         }
     }
 }

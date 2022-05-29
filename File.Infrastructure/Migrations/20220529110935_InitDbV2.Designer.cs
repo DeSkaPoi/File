@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace File.Infrastructure.Migrations
 {
     [DbContext(typeof(FileContext))]
-    [Migration("20220522215922_InitDB")]
-    partial class InitDB
+    [Migration("20220529110935_InitDbV2")]
+    partial class InitDbV2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -74,19 +74,18 @@ namespace File.Infrastructure.Migrations
             modelBuilder.Entity("File.Infrastructure.DBModel.FileObjectDataBase", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<byte[]>("File")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<Guid>("FileManagerId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("FileType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FileManagerId")
-                        .IsUnique();
 
                     b.ToTable("FileObject");
                 });
@@ -95,7 +94,7 @@ namespace File.Infrastructure.Migrations
                 {
                     b.HasOne("File.Infrastructure.DBModel.FileInfoDataBase", "Manager")
                         .WithOne("FileObj")
-                        .HasForeignKey("File.Infrastructure.DBModel.FileObjectDataBase", "FileManagerId")
+                        .HasForeignKey("File.Infrastructure.DBModel.FileObjectDataBase", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace File.Infrastructure.RepositoryDB
 {
-    public class FileRepository : IFileRepository
+    public class FileRepository : IFileRepository, IFileObjectRepository
     {
         private readonly FileContext _context;
         public FileRepository(FileContext context)
@@ -18,6 +18,7 @@ namespace File.Infrastructure.RepositoryDB
 
         public async Task<IReadOnlyList<FileInfoDataBase>> GetAllFilesAsync()
         {
+            return await _context.Files.ToListAsync();
             return await _context.Files.Include(f => f.FileObj).ToListAsync();
         }
 
@@ -27,15 +28,16 @@ namespace File.Infrastructure.RepositoryDB
             return await _context.Files.Include(f => f.FileObj).FirstOrDefaultAsync(f => f.Id == idFile);
         }
 
-        public async Task<FileInfoDataBase> GetByIdFileObjectAsync(Guid idFile)
+        public async Task<FileObjectDataBase> GetByIdFileObjectAsync(Guid idFile)
         {
-            return await _context.Files.Include(f => f.FileObj).FirstOrDefaultAsync(f => f.Id == idFile);
+            return await _context.FilesObject.FindAsync(idFile);
         }
 
-        public async Task AddFileAsync(FileInfoDataBase file)
+        public async Task<Guid> AddFileAsync(FileInfoDataBase file)
         {
-            await _context.Files.AddAsync(file);
+            var fileInfoDb = await _context.Files.AddAsync(file);
             await _context.SaveChangesAsync();
+            return fileInfoDb.Entity.Id;
         }
 
         public async Task DeleteFileAsync(Guid idFile)
@@ -55,15 +57,19 @@ namespace File.Infrastructure.RepositoryDB
         }
         public async Task UpdateFileObjectAsync(FileObjectDataBase file)
         {
+            /*if (!fileDb.FileObj.Equals(file.File))
+            {
+                fileDb.FileObj.File = file.File;
+                fileDb.FileObj.FileType = file.FileType;
+            }*/
             _context.FilesObject.Update(file);
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddFileObjectAsync(FileObjectDataBase file, Guid idFile)
+        public async Task AddFileObjectAsync(FileObjectDataBase file)
         {
-            var fileFromDataBase = await _context.Files.Include(f => f.FileObj).FirstOrDefaultAsync(f => f.Id == idFile);
-            fileFromDataBase.FileObj = file;
-            //await _context.AddAsync(fileFromDataBase);
+            await _context.FilesObject.AddAsync(file);
+            //await _context.AddAsync(file);
             await _context.SaveChangesAsync();
         }
     }

@@ -12,18 +12,13 @@ namespace FileManagement.Converters
     {
         public static FileInfoDataBase ConvertToDataBase(this FileInformation file)
         {
-            FileObjectDataBase fileObject = null;
-            if (file.FileObj is not null)
-            {
-                fileObject = new FileObjectDataBase(file.FileObj.File);
-            }
             return new FileInfoDataBase(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
-                file.CreationTime, file.LastUpDate, file.Size, fileObject);
+                file.CreationTime, file.LastUpDate, file.Size);
         }
 
         public static FileObjectDataBase ConvertToDataBase(this FileObject file)
         {
-            return new FileObjectDataBase(file.File);
+            return new FileObjectDataBase(file.Id, file.Name, file.File, file.FileType);
         }
     }
 }

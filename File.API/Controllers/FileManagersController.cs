@@ -15,20 +15,20 @@ namespace File.API.Controllers
     [ApiController]
     public class FileManagersController : ControllerBase
     {
-        private readonly IFileServices _service;
-        public FileManagersController(IFileServices service)
+        private readonly IFileService _service;
+        public FileManagersController(IFileService service)
         {
             _service = service;
         }
 
         // GET: api/FileManagers
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<FileResponse>>> GetFilesAsync()
+        public async Task<ActionResult<IReadOnlyList<FileInfoResponse>>> GetFilesAsync()
         {
             try
             {
                 var file = await _service.GetFilesAsync();
-                var action = new ActionResult<IReadOnlyList<FileResponse>>(file.ConvertToResponse());
+                var action = new ActionResult<IReadOnlyList<FileInfoResponse>>(file.ConvertInfoToResponse());
                 return action;
             }
             catch (Exception ex)
@@ -56,7 +56,7 @@ namespace File.API.Controllers
         // PUT: api/FileManagers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFileManagerAsync(Guid id, FileResponse fileManager)
+        public async Task<IActionResult> PutFileManagerAsync(Guid id, FileInfoResponse fileManager)
         {
             try
             {
@@ -72,13 +72,13 @@ namespace File.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<FileResponse>> PostFileManagerAsync(FileResponse fileManager)
+        public async Task<ActionResult<FileInfoResponse>> PostFileManagerAsync(FileInfoResponse fileManager)
         {
             try
             {
                 var payloadRequests = fileManager.ConvertToModel();
-                await _service.AddFileAsync(payloadRequests);
-                return StatusCode(201, fileManager);
+                var addedFileId = await _service.AddFileAsync(payloadRequests);
+                return StatusCode(201, addedFileId);
             }
             catch (Exception ex)
             {

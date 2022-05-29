@@ -32,11 +32,12 @@ namespace File.Infrastructure.ContextDB
 
             modelBuilder.Entity<FileObjectDataBase>(fileObject =>
             {
+                fileObject.HasKey(primaryKey => primaryKey.Id);
                 fileObject.ToTable("FileObject");
                 fileObject.Property(prop => prop.File).HasDefaultValue(null);
                 
                 fileObject.HasOne(fileObj => fileObj.Manager).WithOne(fileManager => fileManager.FileObj)
-                    .HasForeignKey<FileObjectDataBase>(fileManager => fileManager.FileManagerId);
+                    .HasForeignKey<FileObjectDataBase>(fileManager => fileManager.Id);
             });
         }
     }
