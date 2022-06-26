@@ -7,7 +7,7 @@ using File.Domain.Model;
 using FileManagement.Services;
 using File.API.Converts;
 using File.API.ModelResponses;
-using File.Domain.ModelResponses;
+using Microsoft.AspNetCore.Http;
 
 namespace File.API.Controllers
 {
@@ -15,21 +15,37 @@ namespace File.API.Controllers
     [ApiController]
     public class FileManagersController : ControllerBase
     {
-        private readonly IFileService _service;
-        public FileManagersController(IFileService service)
+        private readonly IFileService _fileService;
+        public FileManagersController(IFileService fileService)
         {
-            _service = service;
+            _fileService = fileService;
         }
 
         // GET: api/FileManagers
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<FileInfoResponse>>> GetFilesAsync()
+        public async Task<ActionResult<IReadOnlyList<FilesInfoResponse>>> GetFilesAsync()
         {
             try
             {
-                var file = await _service.GetFilesAsync();
-                var action = new ActionResult<IReadOnlyList<FileInfoResponse>>(file.ConvertInfoToResponse());
+                var file = await _fileService.GetFilesAsync();
+                var action = new ActionResult<IReadOnlyList<FilesInfoResponse>>(file.ConvertInfoListToResponse());
                 return action;
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = new ErrorResponse(ex.Message);
+                return StatusCode(404, errorResponse);
+            }
+        }
+
+        [HttpGet("file/{id}")]
+        public async Task<ActionResult<FileObjectResponse>> GetFileObjectAsync(Guid id)
+        {
+            try
+            {
+                var fileManager = await _fileService.GetFileObjectAsync(id);
+                var response = fileManager.ConvertToResponse();
+                return response;
             }
             catch (Exception ex)
             {
@@ -42,7 +58,7 @@ namespace File.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<FileInfoResponse>> GetFileAsync(Guid id)
         {
-            var fileManager = await _service.GetFileAsync(id);
+            var fileManager = await _fileService.GetFileAsync(id);
             if (fileManager == null)
             {
                 var errorResponse = new ErrorResponse($"Not found {id}");
@@ -61,7 +77,7 @@ namespace File.API.Controllers
             try
             {
                 var payloadRequests = fileManager.ConvertToModel();
-                await _service.ChangeFileAsync(id, payloadRequests);
+                await _fileService.ChangeFileAsync(id, payloadRequests);
                 return StatusCode(204);
             }
             catch (Exception ex)
@@ -77,7 +93,7 @@ namespace File.API.Controllers
             try
             {
                 var payloadRequests = fileManager.ConvertToModel();
-                var addedFileId = await _service.AddFileAsync(payloadRequests);
+                var addedFileId = await _fileService.AddFileAsync(payloadRequests);
                 return StatusCode(201, addedFileId);
             }
             catch (Exception ex)
@@ -94,7 +110,7 @@ namespace File.API.Controllers
             int i = 0;
             try
             {
-               NoneDeleteGuid = await _service.DeleteFiles(ids);
+               NoneDeleteGuid = await _fileService.DeleteFiles(ids);
             }
             catch (Exception ex)
             {
@@ -115,7 +131,7 @@ namespace File.API.Controllers
         {
             try
             {
-                await _service.DeleteFile(id);
+                await _fileService.DeleteFile(id);
                 return StatusCode(204);
             }
             catch (Exception ex)

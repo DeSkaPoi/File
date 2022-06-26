@@ -12,13 +12,17 @@ namespace FileManagement.Converters
     {
         public static FileInfoDataBase ConvertToDataBase(this FileInformation file)
         {
-            return new FileInfoDataBase(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
-                file.CreationTime, file.LastUpDate, file.Size);
+            if (file.FileObj != null)
+            {
+                return new FileInfoDataBase(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
+                    file.CreationTime, file.LastUpDate, file.Size, new FileObjectDataBase(file.FileObj.Id, file.FileObj.Name, file.FileObj.File, file.FileObj.FileTypeMime));
+            }
+            throw new Exception("FileObject is null");
         }
 
         public static FileObjectDataBase ConvertToDataBase(this FileObject file)
         {
-            return new FileObjectDataBase(file.Id, file.Name, file.File, file.FileType);
+            return new FileObjectDataBase(file.Id, file.Name, file.File, file.FileTypeMime);
         }
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace File.Infrastructure.Migrations
 {
-    public partial class InitDbV1 : Migration
+    public partial class InirDbV1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,6 +32,7 @@ namespace File.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     File = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     FileType = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },

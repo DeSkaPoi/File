@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace File.Domain.ModelResponses
+namespace File.API.ModelResponses
 {
     public class FileInfoResponse
     {
@@ -14,11 +14,12 @@ namespace File.Domain.ModelResponses
         public DateTime CreationTime { get; set; }
         public DateTime LastUpDate { get; set; }
         public string Size { get; set; }
+        public FileObjectResponse FileObject { get; set; }
 
         //public FileInfoResponse() { }
 
         public FileInfoResponse(Guid id, string title, string format, string keyWords, string description, int? contentType,
-            string content, DateTime creationTime, DateTime lastUpDate, string size)
+            string content, DateTime creationTime, DateTime lastUpDate, string size, FileObjectResponse fileObject)
         {
             Id = id;
             Title = title;
@@ -30,6 +31,7 @@ namespace File.Domain.ModelResponses
             CreationTime = creationTime;
             LastUpDate = lastUpDate;
             Size = size;
+            FileObject = fileObject;
         }
     }
 }

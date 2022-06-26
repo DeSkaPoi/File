@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using File.API.ModelResponses;
 using File.Domain.Model;
-using File.Domain.ModelResponses;
 
 namespace File.API.Converts
 {
@@ -9,8 +9,19 @@ namespace File.API.Converts
     {
         public static FileInfoResponse ConvertInfoToResponse(this FileInformation file)
         {
+            if (file.FileObj != null)
+            {
+                return new FileInfoResponse(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
+                    file.CreationTime, file.LastUpDate, file.Size, new FileObjectResponse(file.FileObj.Id, file.FileObj.Name, file.FileObj.File, file.FileObj.FileTypeMime));
+            }
             return new FileInfoResponse(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
-                file.CreationTime, file.LastUpDate, file.Size);
+                file.CreationTime, file.LastUpDate, file.Size, null);
+        }
+
+        public static IReadOnlyList<FilesInfoResponse> ConvertInfoListToResponse(this IReadOnlyList<FileInformation> files)
+        {
+            var filesInfoResponses = files.Select(fileInfo => new FilesInfoResponse(fileInfo.Id, fileInfo.Title, fileInfo.FileObj.FileTypeMime)).ToList();
+            return filesInfoResponses;
         }
 
         public static IReadOnlyList<FileInfoResponse> ConvertInfoToResponse(this IReadOnlyList<FileInformation> files)
@@ -20,7 +31,7 @@ namespace File.API.Converts
 
         public static FileObjectResponse ConvertToResponse(this FileObject file)
         {
-            return new FileObjectResponse(file.Id, file.Name, file.File, file.FileType);
+            return new FileObjectResponse(file.Id, file.Name, file.File, file.FileTypeMime);
         }
     }
 }

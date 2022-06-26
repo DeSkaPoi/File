@@ -26,7 +26,6 @@ namespace File.API
             services.AddScoped<IFileRepository, FileRepository>();
             services.AddScoped<IFileObjectRepository, FileRepository>();
             services.AddScoped<IFileService, FileService>();
-            services.AddScoped<IFileObjectService, FileService>();
 
             services.AddControllers();
             services.AddDbContext<FileContext>(b =>

@@ -18,8 +18,8 @@ namespace File.Infrastructure.RepositoryDB
 
         public async Task<IReadOnlyList<FileInfoDataBase>> GetAllFilesAsync()
         {
-            return await _context.Files.ToListAsync();
-            return await _context.Files.Include(f => f.FileObj).ToListAsync();
+            return await _context.Files.Select(f => new FileInfoDataBase(f.Id, f.Title, null, null, null, null, null,
+                new DateTime(), new DateTime(), null, new FileObjectDataBase(f.FileObj.Id, null, null ,f.FileObj.FileType))).ToListAsync();
         }
 
         public async Task<FileInfoDataBase> GetByIdFileAsync(Guid idFile)
@@ -55,22 +55,6 @@ namespace File.Infrastructure.RepositoryDB
             _context.Files.Update(file);
             await _context.SaveChangesAsync();
         }
-        public async Task UpdateFileObjectAsync(FileObjectDataBase file)
-        {
-            /*if (!fileDb.FileObj.Equals(file.File))
-            {
-                fileDb.FileObj.File = file.File;
-                fileDb.FileObj.FileType = file.FileType;
-            }*/
-            _context.FilesObject.Update(file);
-            await _context.SaveChangesAsync();
-        }
 
-        public async Task AddFileObjectAsync(FileObjectDataBase file)
-        {
-            await _context.FilesObject.AddAsync(file);
-            //await _context.AddAsync(file);
-            await _context.SaveChangesAsync();
-        }
     }
 }

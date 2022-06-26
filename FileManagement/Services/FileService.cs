@@ -12,7 +12,7 @@ using FileManagement.Services;
 
 namespace File.Domain.Services
 {
-    public class FileService : IFileService, IFileObjectService
+    public class FileService : IFileService
     {
         private readonly IFileRepository _repositoryInfo;
         private readonly IFileObjectRepository _repositoryObject;
@@ -63,31 +63,7 @@ namespace File.Domain.Services
             await _repositoryInfo.UpdateFileAsync(file.ConvertToDataBase());
         }
 
-        public async Task ChangeFileObjectAsync(FileObject file)
-        {
-            var fileDb = await _repositoryInfo.GetByIdFileObjectAsync(file.Id);
-            if (fileDb is null)
-            {
-                throw new Exception($"file with this key: {file.Id} does not exist");
-            }
-
-            /*if (fileDb.File.Equals(file.File))
-            {
-                fileDb.File = file.File;
-                fileDb.FileType = file.Name;
-                fileDb.FileType = file.FileType;
-            }
-            await _repositoryInfo.UpdateFileObjectAsync(fileDb);*/
-            await _repositoryInfo.UpdateFileObjectAsync(file.ConvertToDataBase());
-        }
-
-        public async Task AddFileObjectAsync(FileObject file)
-        {
-            var fileObject = new FileObjectDataBase(file.Id, file.Name, file.File, file.FileType);
-            await _repositoryInfo.AddFileObjectAsync(fileObject);
-        }
-
-        public async Task<Guid> AddFileAsync(FileInformation file)
+      public async Task<Guid> AddFileAsync(FileInformation file)
         {
             return await _repositoryInfo.AddFileAsync(file.ConvertToDataBase());
         }

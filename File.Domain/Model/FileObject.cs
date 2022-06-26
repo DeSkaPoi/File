@@ -11,14 +11,14 @@ namespace File.Domain.Model
         public Guid Id { get; private set; }
         public string Name { get; private set; }
         public byte[] File { get; private set; }
-        public string FileType { get; private set; }
+        public string FileTypeMime { get; private set; }
 
-        public FileObject(Guid id, string name, byte[] file, string fileType)
+        public FileObject(Guid id, string name, byte[] file, string fileTypeMime)
         {
             Id = id;
             Name = name;
             File = file;
-            FileType = fileType;
+            FileTypeMime = fileTypeMime;
         }
     }
 }
