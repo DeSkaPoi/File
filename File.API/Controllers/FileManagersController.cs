@@ -110,7 +110,7 @@ namespace File.API.Controllers
             int i = 0;
             try
             {
-               NoneDeleteGuid = await _fileService.DeleteFiles(ids);
+               NoneDeleteGuid = await _fileService.DeleteFiles(ids);//98
             }
             catch (Exception ex)
             {
