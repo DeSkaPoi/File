@@ -12,7 +12,7 @@ namespace File.API.Converts
             if (file.FileObj != null)
             {
                 return new FileInfoResponse(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
-                    file.CreationTime, file.LastUpDate, file.Size, new FileObjectResponse(file.FileObj.Id, file.FileObj.Name, file.FileObj.File, file.FileObj.FileTypeMime));
+                    file.CreationTime, file.LastUpDate, file.Size, new PayloadFileResponse(file.FileObj.Id, file.FileObj.Name, file.FileObj.File, file.FileObj.FileTypeMime));
             }
             return new FileInfoResponse(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
                 file.CreationTime, file.LastUpDate, file.Size, null);
@@ -29,9 +29,9 @@ namespace File.API.Converts
             return files.Select(file => file.ConvertInfoToResponse()).ToList();
         }
 
-        public static FileObjectResponse ConvertToResponse(this FileObject file)
+        public static PayloadFileResponse ConvertToResponse(this PayloadFile file)
         {
-            return new FileObjectResponse(file.Id, file.Name, file.File, file.FileTypeMime);
+            return new PayloadFileResponse(file.Id, file.Name, file.File, file.FileTypeMime);
         }
     }
 }

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using File.Domain.Model;
 using File.Infrastructure.DBModel;
 
-namespace FileManagement.Converters
+namespace File.Domain.Converters
 {
     public static class ConvertsModelToDataBase
     {
@@ -17,15 +13,15 @@ namespace FileManagement.Converters
                 return new FileInfoDataBase(file.Id, file.Title, file.Format, file.KeyWords, file.Description,
                     file.ContentType, file.Content,
                     file.CreationTime, file.LastUpDate, file.Size,
-                    new FileObjectDataBase(file.FileObj.Id, file.FileObj.Name, file.FileObj.File,
+                    new FileObjectDataBase(file.Id, file.FileObj.Name, file.FileObj.File,
                         file.FileObj.FileTypeMime));
             }
             throw new Exception("FileObject is null");
         }
 
-        public static FileObjectDataBase ConvertToDataBase(this FileObject file)
+        public static FileObjectDataBase ConvertToDataBase(this PayloadFile file, Guid id)
         {
-            return new FileObjectDataBase(file.Id, file.Name, file.File, file.FileTypeMime);
+            return new FileObjectDataBase(id, file.Name, file.File, file.FileTypeMime);
         }
     }
 }

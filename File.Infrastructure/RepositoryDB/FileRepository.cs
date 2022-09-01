@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace File.Infrastructure.RepositoryDB
 {
-    public class FileRepository : IFileRepository, IFileObjectRepository
+    public class FileRepository : IFileRepository
     {
         private readonly FileContext _context;
         public FileRepository(FileContext context)
@@ -19,7 +19,7 @@ namespace File.Infrastructure.RepositoryDB
         public async Task<IReadOnlyList<FileInfoDataBase>> GetAllFilesAsync()
         {
             return await _context.Files.Select(f => new FileInfoDataBase(f.Id, f.Title, null, null, null, null, null,
-                new DateTime(), new DateTime(), null, new FileObjectDataBase(f.FileObj.Id, null, null ,f.FileObj.FileType))).ToListAsync();
+                new DateTime(), new DateTime(), null, null)).ToListAsync();
         }
 
         public async Task<FileInfoDataBase> GetByIdFileAsync(Guid idFile)

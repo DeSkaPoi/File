@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FileManagement\FileManagement.csproj" />
+    <ProjectReference Include="..\File.Domain\File.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -27,7 +27,8 @@ namespace File.Infrastructure.ContextDB
                 tmp.Property(prop => prop.ContentType).HasDefaultValue(null);
                 tmp.Property(prop => prop.LastUpDate).HasDefaultValue(null);
 
-                tmp.HasOne(fileManager => fileManager.FileObj).WithOne(fileObj => fileObj.Manager);
+                tmp.HasOne(fileManager => fileManager.FileObj)
+                   .WithOne(fileObj => fileObj.Manager);
             });
 
             modelBuilder.Entity<FileObjectDataBase>(fileObject =>
@@ -36,7 +37,9 @@ namespace File.Infrastructure.ContextDB
                 fileObject.ToTable("FileObject");
                 fileObject.Property(prop => prop.File).HasDefaultValue(null);
                 
-                fileObject.HasOne(fileObj => fileObj.Manager).WithOne(fileManager => fileManager.FileObj)
+                fileObject
+                    .HasOne(fileObj => fileObj.Manager)
+                    .WithOne(fileManager => fileManager.FileObj)
                     .HasForeignKey<FileObjectDataBase>(fileManager => fileManager.Id);
             });
         }

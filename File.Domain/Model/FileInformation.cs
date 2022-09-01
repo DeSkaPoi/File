@@ -15,10 +15,10 @@ namespace File.Domain.Model
         public DateTime LastUpDate { get; private set; }
         public string Size { get; private set; }
 
-        public FileObject FileObj { get; private set; }
+        public PayloadFile FileObj { get; private set; }
 
         public FileInformation(Guid id, string title, string format, string keyWords, string description, int? contentType,
-            string content, DateTime creationTime, DateTime lastUpDate, string size, FileObject fileObject)
+            string content, DateTime creationTime, DateTime lastUpDate, string size, PayloadFile fileObject)
         {
             Id = id;
             Title = title;

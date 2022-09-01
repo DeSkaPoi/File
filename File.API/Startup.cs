@@ -1,7 +1,6 @@
 using File.Domain.Services;
 using File.Infrastructure.ContextDB;
 using File.Infrastructure.RepositoryDB;
-using FileManagement.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,8 +23,8 @@ namespace File.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IFileRepository, FileRepository>();
-            services.AddScoped<IFileObjectRepository, FileRepository>();
             services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IPayloadFileService, PayloadFileService>();
 
             services.AddControllers();
             services.AddDbContext<FileContext>(b =>

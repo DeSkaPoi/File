@@ -4,19 +4,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using File.Domain.Model;
-using FileManagement.Services;
 using File.API.Converts;
 using File.API.ModelResponses;
+using File.Domain.Services;
 using Microsoft.AspNetCore.Http;
 
 namespace File.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FileManagersController : ControllerBase
+    public class FileDescriptionController : ControllerBase
     {
         private readonly IFileService _fileService;
-        public FileManagersController(IFileService fileService)
+        public FileDescriptionController(IFileService fileService)
         {
             _fileService = fileService;
         }
@@ -37,23 +37,7 @@ namespace File.API.Controllers
                 return StatusCode(404, errorResponse);
             }
         }
-
-        [HttpGet("file/{id}")]
-        public async Task<ActionResult<FileObjectResponse>> GetFileObjectAsync(Guid id)
-        {
-            try
-            {
-                var fileManager = await _fileService.GetFileObjectAsync(id);
-                var response = fileManager.ConvertToResponse();
-                return response;
-            }
-            catch (Exception ex)
-            {
-                var errorResponse = new ErrorResponse(ex.Message);
-                return StatusCode(404, errorResponse);
-            }
-        }
-
+        
         // GET: api/FileManagers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<FileInfoResponse>> GetFileAsync(Guid id)
@@ -104,13 +88,13 @@ namespace File.API.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteFileManagerRange(List<Guid> ids)
+        public async Task<IActionResult> DeleteFileManagerRangeAsync(List<Guid> ids)
         {
             IReadOnlyList<Guid> NoneDeleteGuid = new List<Guid>();
             int i = 0;
             try
             {
-               NoneDeleteGuid = await _fileService.DeleteFiles(ids);
+               NoneDeleteGuid = await _fileService.DeleteFilesAsync(ids);
             }
             catch (Exception ex)
             {
@@ -127,11 +111,11 @@ namespace File.API.Controllers
 
         // DELETE: api/FileManagers/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFileManager(Guid id)
+        public async Task<IActionResult> DeleteFileManagerAsync(Guid id)
         {
             try
             {
-                await _fileService.DeleteFile(id);
+                await _fileService.DeleteFileAsync(id);
                 return StatusCode(204);
             }
             catch (Exception ex)

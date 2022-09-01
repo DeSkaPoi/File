@@ -4,23 +4,19 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using File.Domain.Converters;
 using File.Domain.Model;
 using File.Infrastructure.DBModel;
 using File.Infrastructure.RepositoryDB;
-using FileManagement.Converters;
-using FileManagement.Services;
 
 namespace File.Domain.Services
 {
     public class FileService : IFileService
     {
         private readonly IFileRepository _repositoryInfo;
-        private readonly IFileObjectRepository _repositoryObject;
-
-        public FileService(IFileRepository repository, IFileObjectRepository repositoryObject)
+        public FileService(IFileRepository repository)
         {
             _repositoryInfo = repository;
-            _repositoryObject = repositoryObject;
         }
 
         public async Task<IReadOnlyList<FileInformation>> GetFilesAsync()
@@ -41,18 +37,6 @@ namespace File.Domain.Services
             return filesModel;
         }
 
-        public async Task<FileObject> GetFileObjectAsync(Guid id)
-        {
-            var fileDb = await _repositoryObject.GetByIdFileObjectAsync(id);
-            if (fileDb == null)
-            {
-                throw new Exception($"file with this key: {id} does not exist");
-            }
-
-            var filesModel = fileDb.ConvertToModel();
-            return filesModel;
-        }
-
         public async Task ChangeFileAsync(Guid id, FileInformation file)
         {
             if (id != file.Id)
@@ -68,7 +52,7 @@ namespace File.Domain.Services
             return await _repositoryInfo.AddFileAsync(file.ConvertToDataBase());
         }
 
-        public async Task<IReadOnlyList<Guid>> DeleteFiles(IReadOnlyList<Guid> ids)
+        public async Task<IReadOnlyList<Guid>> DeleteFilesAsync(IReadOnlyList<Guid> ids)
         {
             var NoneDeleteGuid = new List<Guid>();
             int i = 0;
@@ -87,7 +71,7 @@ namespace File.Domain.Services
             return NoneDeleteGuid;
         }
 
-        public async Task DeleteFile(Guid id)
+        public async Task DeleteFileAsync(Guid id)
         { 
             await _repositoryInfo.DeleteFileAsync(id);
         }
