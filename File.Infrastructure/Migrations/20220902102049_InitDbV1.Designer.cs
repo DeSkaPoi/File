@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace File.Infrastructure.Migrations
 {
     [DbContext(typeof(FileContext))]
-    [Migration("20220901102029_InitDbV1")]
+    [Migration("20220902102049_InitDbV1")]
     partial class InitDbV1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,7 +71,7 @@ namespace File.Infrastructure.Migrations
                     b.ToTable("Files");
                 });
 
-            modelBuilder.Entity("File.Infrastructure.DBModel.FileObjectDataBase", b =>
+            modelBuilder.Entity("File.Infrastructure.DBModel.PayloadFileDataBase", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -90,11 +90,11 @@ namespace File.Infrastructure.Migrations
                     b.ToTable("FileObject");
                 });
 
-            modelBuilder.Entity("File.Infrastructure.DBModel.FileObjectDataBase", b =>
+            modelBuilder.Entity("File.Infrastructure.DBModel.PayloadFileDataBase", b =>
                 {
                     b.HasOne("File.Infrastructure.DBModel.FileInfoDataBase", "Manager")
                         .WithOne("FileObj")
-                        .HasForeignKey("File.Infrastructure.DBModel.FileObjectDataBase", "Id")
+                        .HasForeignKey("File.Infrastructure.DBModel.PayloadFileDataBase", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

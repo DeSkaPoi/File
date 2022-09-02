@@ -14,7 +14,7 @@ namespace File.Domain.Converters
                 file.CreationTime, file.LastUpDate, file.Size, payload);
         }
 
-        public static PayloadFile ConvertToModel(this FileObjectDataBase file)
+        public static PayloadFile ConvertToModel(this PayloadFileDataBase file)
         {
             if (file is not null)
             {
@@ -28,7 +28,7 @@ namespace File.Domain.Converters
             return files.Select(file => file.ConvertToModel()).ToList();
         }
 
-        public static IReadOnlyList<PayloadFile> ConvertToModel(this IReadOnlyList<FileObjectDataBase> files)
+        public static IReadOnlyList<PayloadFile> ConvertToModel(this IReadOnlyList<PayloadFileDataBase> files)
         {
             return files.Select(file => new PayloadFile(file.Name, file.File, file.FileType)).ToList();
         }

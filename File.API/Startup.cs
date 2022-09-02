@@ -23,6 +23,7 @@ namespace File.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IFileRepository, FileRepository>();
+            services.AddScoped<IPayloaadFileRepository, PayloadFileRepository>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IPayloadFileService, PayloadFileService>();
 

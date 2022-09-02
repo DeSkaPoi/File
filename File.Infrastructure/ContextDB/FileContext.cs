@@ -7,7 +7,7 @@ namespace File.Infrastructure.ContextDB
     public class FileContext : DbContext
     {
         public DbSet<FileInfoDataBase> Files { get; set; }
-        public DbSet<FileObjectDataBase> FilesObject { get; set; }
+        public DbSet<PayloadFileDataBase> PayloadFile { get; set; }
         public FileContext(DbContextOptions options) : base(options)
         {
         }
@@ -31,7 +31,7 @@ namespace File.Infrastructure.ContextDB
                    .WithOne(fileObj => fileObj.Manager);
             });
 
-            modelBuilder.Entity<FileObjectDataBase>(fileObject =>
+            modelBuilder.Entity<PayloadFileDataBase>(fileObject =>
             {
                 fileObject.HasKey(primaryKey => primaryKey.Id);
                 fileObject.ToTable("FileObject");
@@ -40,7 +40,7 @@ namespace File.Infrastructure.ContextDB
                 fileObject
                     .HasOne(fileObj => fileObj.Manager)
                     .WithOne(fileManager => fileManager.FileObj)
-                    .HasForeignKey<FileObjectDataBase>(fileManager => fileManager.Id);
+                    .HasForeignKey<PayloadFileDataBase>(fileManager => fileManager.Id);
             });
         }
     }

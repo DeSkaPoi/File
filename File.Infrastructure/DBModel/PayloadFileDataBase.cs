@@ -2,7 +2,7 @@
 
 namespace File.Infrastructure.DBModel
 {
-    public class FileObjectDataBase
+    public class PayloadFileDataBase
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -11,7 +11,7 @@ namespace File.Infrastructure.DBModel
 
         public FileInfoDataBase Manager { get; set; }
 
-        public FileObjectDataBase(Guid id, string name, byte[] file, string fileType)
+        public PayloadFileDataBase(Guid id, string name, byte[] file, string fileType)
         {
             Id = id;
             Name = name;

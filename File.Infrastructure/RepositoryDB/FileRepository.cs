@@ -28,9 +28,9 @@ namespace File.Infrastructure.RepositoryDB
             return await _context.Files.Include(f => f.FileObj).FirstOrDefaultAsync(f => f.Id == idFile);
         }
 
-        public async Task<FileObjectDataBase> GetByIdFileObjectAsync(Guid idFile)
+        public async Task<PayloadFileDataBase> GetByIdPayloadFileAsync(Guid idFile)
         {
-            return await _context.FilesObject.FindAsync(idFile);
+            return await _context.PayloadFile.FindAsync(idFile);
         }
 
         public async Task<Guid> AddFileAsync(FileInfoDataBase file)

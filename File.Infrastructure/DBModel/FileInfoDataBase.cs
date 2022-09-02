@@ -15,12 +15,12 @@ namespace File.Infrastructure.DBModel
         public DateTime LastUpDate { get; set; }
         public string Size { get; set; }
 
-        public FileObjectDataBase FileObj { get; set; }
+        public PayloadFileDataBase FileObj { get; set; }
 
         public FileInfoDataBase() { }
 
         public FileInfoDataBase(Guid id, string title, string format, string keyWords, string description, int? contentType,
-            string content, DateTime creationTime, DateTime lastUpDate, string size, FileObjectDataBase fileObj)
+            string content, DateTime creationTime, DateTime lastUpDate, string size, PayloadFileDataBase fileObj)
         {
             Id = id;
             Title = title;

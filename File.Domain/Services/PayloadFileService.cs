@@ -3,30 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using File.Domain.Converters;
 using File.Domain.Model;
+using File.Infrastructure.DBModel;
+using File.Infrastructure.RepositoryDB;
 
 namespace File.Domain.Services
 {
     public class PayloadFileService : IPayloadFileService
     {
-        public Task<PayloadFile> GetPayloadFileAsync(Guid id)
+        private readonly IPayloaadFileRepository _payloadRepository;
+        public PayloadFileService(IPayloaadFileRepository payloadRepository)
         {
-            throw new NotImplementedException();
+            _payloadRepository = payloadRepository;
+        }
+        public async Task<PayloadFile> GetPayloadFileAsync(Guid id)
+        {
+            var fileDataBase = await _payloadRepository.GetByIdPayloadFileAsync(id);
+            return fileDataBase.ConvertToModel();
         }
 
-        public Task ChangeFileAsync(Guid id, PayloadFile file)
+        public async Task ChangeFileAsync(Guid id, PayloadFile file)
         {
-            throw new NotImplementedException();
+            await _payloadRepository.DeleteFileAsync(id);
+            var editingFile = new PayloadFileDataBase(id, file.Name, file.File, file.FileTypeMime);
+            await _payloadRepository.AddPayloadFileAsync(editingFile);
         }
 
-        public Task AddFileAsync(Guid idFile, PayloadFile file)
+        public async Task AddFileAsync(Guid idFile, PayloadFile file)
         {
-            throw new NotImplementedException();
+            var addedFile = new PayloadFileDataBase(idFile, file.Name, file.File, file.FileTypeMime);
+            await _payloadRepository.AddPayloadFileAsync(addedFile);
         }
 
-        public Task DeleteFileAsync(Guid id)
+        public async Task DeleteFileAsync(Guid id)
         {
-            throw new NotImplementedException();
+            await _payloadRepository.DeleteFileAsync(id);
         }
     }
 }
