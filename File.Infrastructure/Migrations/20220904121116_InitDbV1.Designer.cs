@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace File.Infrastructure.Migrations
 {
     [DbContext(typeof(FileContext))]
-    [Migration("20220902102049_InitDbV1")]
+    [Migration("20220904121116_InitDbV1")]
     partial class InitDbV1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,7 +87,7 @@ namespace File.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FileObject");
+                    b.ToTable("PayloadFile");
                 });
 
             modelBuilder.Entity("File.Infrastructure.DBModel.PayloadFileDataBase", b =>

@@ -8,7 +8,7 @@ namespace File.Domain.Converters
     {
         public static FileInfoDataBase ConvertToDataBase(this FileInformation file)
         {
-            if (file.FileObj != null)
+            /*if (file.FileObj != null)
             {
                 return new FileInfoDataBase(file.Id, file.Title, file.Format, file.KeyWords, file.Description,
                     file.ContentType, file.Content,
@@ -16,7 +16,11 @@ namespace File.Domain.Converters
                     new PayloadFileDataBase(file.Id, file.FileObj.Name, file.FileObj.File,
                         file.FileObj.FileTypeMime));
             }
-            throw new Exception("FileObject is null");
+            throw new Exception("FileObject is null");*/
+
+            return new FileInfoDataBase(file.Id, file.Title, file.Format, file.KeyWords, file.Description,
+                file.ContentType, file.Content,
+                file.CreationTime, file.LastUpDate, file.Size, null);
         }
 
         public static PayloadFileDataBase ConvertToDataBase(this PayloadFile file, Guid id)

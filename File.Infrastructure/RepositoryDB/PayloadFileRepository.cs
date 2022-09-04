@@ -24,6 +24,7 @@ namespace File.Infrastructure.RepositoryDB
         public async Task<Guid> AddPayloadFileAsync(PayloadFileDataBase file)
         {
             var newFile = await _context.PayloadFile.AddAsync(file);
+            await _context.SaveChangesAsync();
             return newFile.Entity.Id;
         }
 
@@ -31,6 +32,7 @@ namespace File.Infrastructure.RepositoryDB
         {
             var delFile = await GetByIdPayloadFileAsync(idFile);
             _context.PayloadFile.Remove(delFile);
+            await _context.SaveChangesAsync();
         }
     }
 }

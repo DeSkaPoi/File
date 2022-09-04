@@ -14,12 +14,12 @@ namespace File.API.ModelResponses
         public DateTime CreationTime { get; set; }
         public DateTime LastUpDate { get; set; }
         public string Size { get; set; }
-        public PayloadFileResponse FileObject { get; set; }
+        //public PayloadFileResponse FileObject { get; set; }
 
         //public FileInfoResponse() { }
 
         public FileInfoResponse(Guid id, string title, string format, string keyWords, string description, int? contentType,
-            string content, DateTime creationTime, DateTime lastUpDate, string size, PayloadFileResponse fileObject)
+            string content, DateTime creationTime, DateTime lastUpDate, string size/*, PayloadFileResponse fileObject*/)
         {
             Id = id;
             Title = title;
@@ -31,7 +31,7 @@ namespace File.API.ModelResponses
             CreationTime = creationTime;
             LastUpDate = lastUpDate;
             Size = size;
-            FileObject = fileObject;
+            /*FileObject = fileObject*/;
         }
     }
 }

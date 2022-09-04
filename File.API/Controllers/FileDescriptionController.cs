@@ -23,12 +23,12 @@ namespace File.API.Controllers
 
         // GET: api/FileManagers
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<FilesInfoResponse>>> GetFilesAsync()
+        public async Task<ActionResult<IReadOnlyList<FileInfoResponse>>> GetFilesAsync()
         {
             try
             {
                 var file = await _fileService.GetFilesAsync();
-                var action = new ActionResult<IReadOnlyList<FilesInfoResponse>>(file.ConvertInfoListToResponse());
+                var action = new ActionResult<IReadOnlyList<FileInfoResponse>>(file.ConvertInfoToResponse());
                 return action;
             }
             catch (Exception ex)
@@ -72,7 +72,7 @@ namespace File.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<FileInfoResponse>> PostFileManagerAsync(FileInfoResponse fileManager)
+        public async Task<ActionResult<Guid>> PostFileManagerAsync(FileInfoResponse fileManager)
         {
             try
             {

@@ -34,7 +34,7 @@ namespace File.Infrastructure.ContextDB
             modelBuilder.Entity<PayloadFileDataBase>(fileObject =>
             {
                 fileObject.HasKey(primaryKey => primaryKey.Id);
-                fileObject.ToTable("FileObject");
+                fileObject.ToTable("PayloadFile");
                 fileObject.Property(prop => prop.File).HasDefaultValue(null);
                 
                 fileObject

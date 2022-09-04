@@ -9,9 +9,8 @@ namespace File.Domain.Converters
     {
         public static FileInformation ConvertToModel(this FileInfoDataBase file)
         {
-            var payload = file.FileObj.ConvertToModel();
             return new FileInformation(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
-                file.CreationTime, file.LastUpDate, file.Size, payload);
+                file.CreationTime, file.LastUpDate, file.Size, null);
         }
 
         public static PayloadFile ConvertToModel(this PayloadFileDataBase file)

@@ -28,7 +28,7 @@ namespace File.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FileObject",
+                name: "PayloadFile",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -38,9 +38,9 @@ namespace File.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FileObject", x => x.Id);
+                    table.PrimaryKey("PK_PayloadFile", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FileObject_Files_Id",
+                        name: "FK_PayloadFile_Files_Id",
                         column: x => x.Id,
                         principalTable: "Files",
                         principalColumn: "Id",
@@ -51,7 +51,7 @@ namespace File.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "FileObject");
+                name: "PayloadFile");
 
             migrationBuilder.DropTable(
                 name: "Files");

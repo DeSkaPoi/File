@@ -85,7 +85,7 @@ namespace File.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FileObject");
+                    b.ToTable("PayloadFile");
                 });
 
             modelBuilder.Entity("File.Infrastructure.DBModel.PayloadFileDataBase", b =>
