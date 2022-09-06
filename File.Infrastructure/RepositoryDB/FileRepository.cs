@@ -18,8 +18,8 @@ namespace File.Infrastructure.RepositoryDB
 
         public async Task<IReadOnlyList<FileInfoDataBase>> GetAllFilesAsync()
         {
-            return await _context.Files.Select(f => new FileInfoDataBase(f.Id, f.Title, null, null, null, null, null,
-                new DateTime(), new DateTime(), null, null)).ToListAsync();
+            return await _context.Files.Select(f => new FileInfoDataBase(f.Id, f.Title, f.Format, f.KeyWords, f.Description, f.ContentType, f.Content,
+               f.CreationTime, f.LastUpDate, f.Size, null)).ToListAsync();
         }
 
         public async Task<FileInfoDataBase> GetByIdFileAsync(Guid idFile)
