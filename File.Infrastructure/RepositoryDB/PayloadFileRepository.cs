@@ -16,10 +16,9 @@ namespace File.Infrastructure.RepositoryDB
             _context = context;
         }
 
-        public async Task<PayloadFileDataBase> GetByIdPayloadFileAsync(Guid idDoc, Guid idFile)
+        public async Task<PayloadFileDataBase> GetByIdPayloadFileAsync(Guid idFile)
         {
-            return await _context.PayloadFile.Where(f => f.Manager.DocumentId == idDoc)
-                .FirstOrDefaultAsync(fp => fp.Id == idFile);
+            return await _context.PayloadFile.FirstOrDefaultAsync(fp => fp.Id == idFile);
         }
 
         public async Task<Guid> AddPayloadFileAsync(PayloadFileDataBase file)

@@ -21,12 +21,12 @@ namespace File.API.Controllers
             _fileService = fileService;
         }
 
-        [HttpGet("file/{idDoc}/{idFile}")]
-        public async Task<ActionResult<PayloadFileResponse>> GetFileObjectAsync(Guid idDoc, Guid idFile)
+        [HttpGet("file/{idFile}")]
+        public async Task<ActionResult<PayloadFileResponse>> GetFileObjectAsync(Guid idFile)
         {
             try
             {
-                var fileManager = await _fileService.GetPayloadFileAsync(idDoc, idFile);
+                var fileManager = await _fileService.GetPayloadFileAsync(idFile);
                 var response = fileManager.ConvertToResponse();
                 return response;
             }
@@ -44,7 +44,7 @@ namespace File.API.Controllers
             {
                 var modelPayload = payload.ConvertToModel();
                 await _fileService.AddFileAsync(idFile, modelPayload );
-                return StatusCode(204);
+                return StatusCode(201);
             }
             catch (Exception ex)
             {

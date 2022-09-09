@@ -19,16 +19,16 @@ namespace File.Domain.Services
             _repositoryInfo = repository;
         }
 
-        public async Task<IReadOnlyList<FileInformation>> GetFilesAsync(Guid idDoc)
+        public async Task<IReadOnlyList<FileInformation>> GetFilesAsync()
         {
-            var filesDb = await _repositoryInfo.GetAllFilesAsync(idDoc);
+            var filesDb = await _repositoryInfo.GetAllFilesAsync();
             var filesModel = filesDb.ConvertToModel();
             return filesModel;
         }
 
-        public async Task<FileInformation> GetFileAsync(Guid idDoc, Guid idFile)
+        public async Task<FileInformation> GetFileAsync(Guid idFile)
         {
-            var fileDb = await _repositoryInfo.GetByIdFileAsync(idDoc, idFile);
+            var fileDb = await _repositoryInfo.GetByIdFileAsync(idFile);
             if (fileDb == null)
             {
                 return null;

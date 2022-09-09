@@ -9,7 +9,7 @@ namespace File.Infrastructure.RepositoryDB
 {
     public interface IPayloaadFileRepository
     {
-        public Task<PayloadFileDataBase> GetByIdPayloadFileAsync(Guid idDoc, Guid idFile);
+        public Task<PayloadFileDataBase> GetByIdPayloadFileAsync(Guid idFile);
         public Task<Guid> AddPayloadFileAsync(PayloadFileDataBase file);
         public Task DeleteFileAsync(Guid idFile);
     }

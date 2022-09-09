@@ -22,12 +22,12 @@ namespace File.API.Controllers
         }
 
         // GET: api/FileManagers
-        [HttpGet("{idDoc}")]
-        public async Task<ActionResult<IReadOnlyList<FileInfoResponse>>> GetFilesAsync(Guid idDoc)
+        [HttpGet]
+        public async Task<ActionResult<IReadOnlyList<FileInfoResponse>>> GetFilesAsync()
         {
             try
             {
-                var file = await _fileService.GetFilesAsync(idDoc);
+                var file = await _fileService.GetFilesAsync();
                 var action = new ActionResult<IReadOnlyList<FileInfoResponse>>(file.ConvertInfoToResponse());
                 return action;
             }
@@ -39,13 +39,13 @@ namespace File.API.Controllers
         }
         
         // GET: api/FileManagers/5
-        [HttpGet("{idDoc}/{idFile}")]
-        public async Task<ActionResult<FileInfoResponse>> GetFileAsync(Guid idDoc, Guid idFile)
+        [HttpGet("{idFile}")]
+        public async Task<ActionResult<FileInfoResponse>> GetFileAsync(Guid idFile)
         {
-            var fileManager = await _fileService.GetFileAsync(idDoc, idFile);
+            var fileManager = await _fileService.GetFileAsync(idFile);
             if (fileManager == null)
             {
-                var errorResponse = new ErrorResponse($"Not found {idDoc}-//-{idFile}");
+                var errorResponse = new ErrorResponse($"Not found {idFile}");
                 return StatusCode(404, errorResponse);
             }
 

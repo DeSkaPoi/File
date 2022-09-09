@@ -18,7 +18,7 @@ namespace File.Domain.Converters
             }
             throw new Exception("FileObject is null");*/
 
-            return new FileInfoDataBase(file.Id, file.DocumentId, file.Title, file.Format, file.KeyWords, file.Description,
+            return new FileInfoDataBase(file.Id, file.Title, file.Format, file.KeyWords, file.Description,
                 file.ContentType, file.Content,
                 file.CreationTime, file.LastUpDate, file.Size, null);
         }

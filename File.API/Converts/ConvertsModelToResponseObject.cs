@@ -14,7 +14,7 @@ namespace File.API.Converts
                 return new FileInfoResponse(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
                     file.CreationTime, file.LastUpDate, file.Size, new PayloadFileResponse(file.FileObj.Name, file.FileObj.File, file.FileObj.FileTypeMime));
             }*/
-            return new FileInfoResponse(file.Id, file.DocumentId, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
+            return new FileInfoResponse(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
                 file.CreationTime, file.LastUpDate, file.Size);
         }
         

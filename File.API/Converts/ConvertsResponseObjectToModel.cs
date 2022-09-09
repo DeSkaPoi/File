@@ -16,7 +16,7 @@ namespace File.API.Converts
             }
             throw new Exception("FileObject is null");*/
 
-            return new FileInformation(file.Id, file.DocumentId, file.Title, file.Format, file.KeyWords, file.Description,
+            return new FileInformation(file.Id, file.Title, file.Format, file.KeyWords, file.Description,
                 file.ContentType, file.Content,
                 file.CreationTime, file.LastUpDate, file.Size, null);
         }

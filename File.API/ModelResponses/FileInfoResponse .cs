@@ -5,7 +5,6 @@ namespace File.API.ModelResponses
     public class FileInfoResponse
     {
         public Guid Id { get; set; }
-        public Guid DocumentId { get; set; }
         public string Title { get; set; }
         public string Format { get; set; }
         public string KeyWords { get; set; }
@@ -19,11 +18,10 @@ namespace File.API.ModelResponses
 
         //public FileInfoResponse() { }
 
-        public FileInfoResponse(Guid id, Guid documentId, string title, string format, string keyWords, string description, int? contentType,
+        public FileInfoResponse(Guid id, string title, string format, string keyWords, string description, int? contentType,
             string content, DateTime creationTime, DateTime lastUpDate, string size/*, PayloadFileResponse fileObject*/)
         {
             Id = id;
-            DocumentId = documentId;
             Title = title;
             Format = format;
             KeyWords = keyWords;

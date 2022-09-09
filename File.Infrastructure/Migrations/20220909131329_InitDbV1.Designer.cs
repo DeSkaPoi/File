@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace File.Infrastructure.Migrations
 {
     [DbContext(typeof(FileContext))]
-    [Migration("20220909123547_InitDbV2")]
-    partial class InitDbV2
+    [Migration("20220909131329_InitDbV1")]
+    partial class InitDbV1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,9 +42,6 @@ namespace File.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
                         .HasDefaultValue("not indicated");
-
-                    b.Property<Guid>("DocumentId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Format")
                         .ValueGeneratedOnAdd()

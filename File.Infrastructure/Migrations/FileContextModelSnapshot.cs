@@ -41,9 +41,6 @@ namespace File.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasDefaultValue("not indicated");
 
-                    b.Property<Guid>("DocumentId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Format")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
