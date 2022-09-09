@@ -9,7 +9,7 @@ namespace File.Domain.Converters
     {
         public static FileInformation ConvertToModel(this FileInfoDataBase file)
         {
-            return new FileInformation(file.Id, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
+            return new FileInformation(file.Id, file.DocumentId, file.Title, file.Format, file.KeyWords, file.Description, file.ContentType, file.Content,
                 file.CreationTime, file.LastUpDate, file.Size, null);
         }
 

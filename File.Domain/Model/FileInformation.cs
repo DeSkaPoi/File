@@ -5,6 +5,7 @@ namespace File.Domain.Model
     public class FileInformation
     {
         public Guid Id { get; private set; }
+        public Guid DocumentId { get; set; }
         public string Title { get; private set; }
         public string Format { get; private set; }
         public string KeyWords { get; private set; }
@@ -17,10 +18,11 @@ namespace File.Domain.Model
 
         public PayloadFile FileObj { get; private set; }
 
-        public FileInformation(Guid id, string title, string format, string keyWords, string description, int? contentType,
+        public FileInformation(Guid id, Guid documentId, string title, string format, string keyWords, string description, int? contentType,
             string content, DateTime creationTime, DateTime lastUpDate, string size, PayloadFile fileObject)
         {
             Id = id;
+            DocumentId = documentId;
             Title = title;
             Format = format;
             KeyWords = keyWords;

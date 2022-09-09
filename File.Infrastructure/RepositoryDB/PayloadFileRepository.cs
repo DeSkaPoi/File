@@ -16,9 +16,10 @@ namespace File.Infrastructure.RepositoryDB
             _context = context;
         }
 
-        public async Task<PayloadFileDataBase> GetByIdPayloadFileAsync(Guid idFile)
+        public async Task<PayloadFileDataBase> GetByIdPayloadFileAsync(Guid idDoc, Guid idFile)
         {
-            return await _context.PayloadFile.FindAsync(idFile);
+            return await _context.PayloadFile.Where(f => f.Manager.DocumentId == idDoc)
+                .FirstOrDefaultAsync(fp => fp.Id == idFile);
         }
 
         public async Task<Guid> AddPayloadFileAsync(PayloadFileDataBase file)
@@ -30,7 +31,8 @@ namespace File.Infrastructure.RepositoryDB
 
         public async Task DeleteFileAsync(Guid idFile)
         {
-            var delFile = await GetByIdPayloadFileAsync(idFile);
+
+            var delFile = await _context.PayloadFile.FindAsync(idFile);
             _context.PayloadFile.Remove(delFile);
             await _context.SaveChangesAsync();
         }

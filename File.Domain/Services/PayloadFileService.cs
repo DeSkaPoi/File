@@ -17,9 +17,9 @@ namespace File.Domain.Services
         {
             _payloadRepository = payloadRepository;
         }
-        public async Task<PayloadFile> GetPayloadFileAsync(Guid id)
+        public async Task<PayloadFile> GetPayloadFileAsync(Guid idDoc, Guid idFile)
         {
-            var fileDataBase = await _payloadRepository.GetByIdPayloadFileAsync(id);
+            var fileDataBase = await _payloadRepository.GetByIdPayloadFileAsync(idDoc, idFile);
             return fileDataBase.ConvertToModel();
         }
 

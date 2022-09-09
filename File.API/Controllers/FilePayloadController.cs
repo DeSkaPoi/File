@@ -21,12 +21,12 @@ namespace File.API.Controllers
             _fileService = fileService;
         }
 
-        [HttpGet("file/{id}")]
-        public async Task<ActionResult<PayloadFileResponse>> GetFileObjectAsync(Guid id)
+        [HttpGet("file/{idDoc}/{idFile}")]
+        public async Task<ActionResult<PayloadFileResponse>> GetFileObjectAsync(Guid idDoc, Guid idFile)
         {
             try
             {
-                var fileManager = await _fileService.GetPayloadFileAsync(id);
+                var fileManager = await _fileService.GetPayloadFileAsync(idDoc, idFile);
                 var response = fileManager.ConvertToResponse();
                 return response;
             }

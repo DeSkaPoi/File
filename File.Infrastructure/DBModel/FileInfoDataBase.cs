@@ -5,6 +5,7 @@ namespace File.Infrastructure.DBModel
     public class FileInfoDataBase
     {
         public Guid Id { get; set; }
+        public Guid DocumentId { get; set; }
         public string Title { get; set; }
         public string Format { get; set; }
         public string KeyWords { get; set; }
@@ -19,10 +20,11 @@ namespace File.Infrastructure.DBModel
 
         public FileInfoDataBase() { }
 
-        public FileInfoDataBase(Guid id, string title, string format, string keyWords, string description, int? contentType,
+        public FileInfoDataBase(Guid id, Guid documentId, string title, string format, string keyWords, string description, int? contentType,
             string content, DateTime creationTime, DateTime lastUpDate, string size, PayloadFileDataBase fileObj)
         {
             Id = id;
+            DocumentId = documentId;
             Title = title;
             Format = format;
             KeyWords = keyWords;

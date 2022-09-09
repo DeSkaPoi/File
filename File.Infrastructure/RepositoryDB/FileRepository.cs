@@ -16,16 +16,17 @@ namespace File.Infrastructure.RepositoryDB
             _context = context;
         }
 
-        public async Task<IReadOnlyList<FileInfoDataBase>> GetAllFilesAsync()
+        public async Task<IReadOnlyList<FileInfoDataBase>> GetAllFilesAsync(Guid idDoc)
         {
-            return await _context.Files.Select(f => new FileInfoDataBase(f.Id, f.Title, f.Format, f.KeyWords, f.Description, f.ContentType, f.Content,
+            return await _context.Files.Where(f => f.DocumentId == idDoc).Select(f => new FileInfoDataBase(f.Id, f.DocumentId, f.Title, f.Format, f.KeyWords, f.Description, f.ContentType, f.Content,
                f.CreationTime, f.LastUpDate, f.Size, null)).ToListAsync();
         }
 
-        public async Task<FileInfoDataBase> GetByIdFileAsync(Guid idFile)
+        public async Task<FileInfoDataBase> GetByIdFileAsync(Guid idDoc, Guid idFile)
         {
-            return await _context.Files.FindAsync(idFile);
-            return await _context.Files.Include(f => f.FileObj).FirstOrDefaultAsync(f => f.Id == idFile);
+            //return await _context.Files.FindAsync(idFile);
+            return await _context.Files.Where(f => f.DocumentId == idDoc).Include(f => f.FileObj)
+                .FirstOrDefaultAsync(f => f.Id == idFile);
         }
 
         public async Task<PayloadFileDataBase> GetByIdPayloadFileAsync(Guid idFile)
