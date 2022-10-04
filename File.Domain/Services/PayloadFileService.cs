@@ -23,16 +23,16 @@ namespace File.Domain.Services
             return fileDataBase.ConvertToModel();
         }
 
-        public async Task ChangeFileAsync(Guid id, PayloadFile file)
+        public async Task ChangeFileAsync(Guid idFile, PayloadFile file)
         {
-            await _payloadRepository.DeleteFileAsync(id);
-            var editingFile = new PayloadFileDataBase(id, file.Name, file.File, file.FileTypeMime);
+            await _payloadRepository.DeleteFileAsync(idFile);
+            var editingFile = file.ConvertToDataBase(idFile);
             await _payloadRepository.AddPayloadFileAsync(editingFile);
         }
 
         public async Task AddFileAsync(Guid idFile, PayloadFile file)
         {
-            var addedFile = new PayloadFileDataBase(idFile, file.Name, file.File, file.FileTypeMime);
+            var addedFile = file.ConvertToDataBase(idFile);
             await _payloadRepository.AddPayloadFileAsync(addedFile);
         }
 
