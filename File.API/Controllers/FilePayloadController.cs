@@ -37,6 +37,21 @@ namespace File.API.Controllers
             }
         }
 
+        [HttpGet("client/{idFile}")]
+        public async Task<ActionResult<string>> GetPictureObjectStringAsync(Guid idFile)
+        {
+            try
+            {
+                var pictureManager = await _fileService.GetPayloadFileStringAsync(idFile);
+                return pictureManager;
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = new ErrorResponse(ex.Message);
+                return StatusCode(404, errorResponse);
+            }
+        }
+
         [HttpPost("file/{idFile}")]
         public async Task<IActionResult> PostFileObjectAsync(Guid idFile, PayloadFileResponse payload)
         {

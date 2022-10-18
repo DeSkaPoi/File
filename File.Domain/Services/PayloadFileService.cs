@@ -23,6 +23,13 @@ namespace File.Domain.Services
             return fileDataBase.ConvertToModel();
         }
 
+        public async Task<string> GetPayloadFileStringAsync(Guid idPicture)
+        {
+            var pictureDataBase = await _payloadRepository.GetByIdPayloadFileAsync(idPicture);
+            var fileModel = pictureDataBase.ConvertToModel();
+            return $"\"data:{fileModel.FileTypeMime};base64,{Convert.ToBase64String(fileModel.File)}\"";
+        }
+
         public async Task ChangeFileAsync(Guid idFile, PayloadFile file)
         {
             await _payloadRepository.DeleteFileAsync(idFile);

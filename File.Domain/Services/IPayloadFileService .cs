@@ -10,6 +10,7 @@ namespace File.Domain.Services
         public Task<PayloadFile> GetPayloadFileAsync(Guid idFile);
         public Task ChangeFileAsync(Guid id, PayloadFile file);
         public Task AddFileAsync(Guid idFile, PayloadFile file);
+        public Task<string> GetPayloadFileStringAsync(Guid idPicture);
         public Task DeleteFileAsync(Guid id);
     }
 }
