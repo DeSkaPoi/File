@@ -52,7 +52,7 @@ namespace File.API
             }
 
             app.UseHttpsRedirection();
-
+            
             app.UseRouting();
             app.UseCors("default");
 
