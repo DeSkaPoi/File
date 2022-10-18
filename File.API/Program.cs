@@ -21,16 +21,11 @@ namespace File.API
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
-                    webBuilder.UseHttpSys(options =>
+                    webBuilder.UseKestrel(op =>
                     {
-                        options.AllowSynchronousIO = false;
-                        options.Authentication.Schemes = AuthenticationSchemes.None;
-                        options.Authentication.AllowAnonymous = true;
-                        options.MaxConnections = null;
-                        options.MaxRequestBodySize = 30000000;
-                        options.UrlPrefixes.Add("http://localhost:5006");
+                        op.ListenLocalhost(5006, options => { options.UseHttps(); });
                     });
+                    webBuilder.UseStartup<Startup>();
                 });
     }
 }
